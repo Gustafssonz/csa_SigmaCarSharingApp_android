@@ -20,14 +20,19 @@ public class User {
     public User() {
     }
 
+    public User(String id, String userName, String isApproved, String totalBookingsYear, String totalDistanceYear, String password)
+        {
+        this.id = id;
+        this.userName = userName;
+        this.isApproved = isApproved;
+        this.totalBookingsYear = totalBookingsYear;
+        this.totalDistanceYear = totalDistanceYear;
+        this.password = password;
+        }
+
     public String getId()
         {
         return id;
-        }
-
-    public void setId(String id)
-        {
-        this.id = id;
         }
 
     public String getUserName()
@@ -75,4 +80,16 @@ public class User {
         return password;
         }
 
+    @Override
+    public String toString()
+        {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", userName='" + userName + '\'' +
+                ", isApproved='" + isApproved + '\'' +
+                ", totalBookingsYear='" + totalBookingsYear + '\'' +
+                ", totalDistanceYear='" + totalDistanceYear + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+        }
 }

@@ -130,7 +130,7 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
 
             }
 
-        private List<Booking> makeGsonArray(JSONArray parentArray)
+        public List<Booking> makeGsonArray(JSONArray parentArray)
             {
             List<Booking> list = new ArrayList<>();
             Gson gson = new Gson();
@@ -152,7 +152,7 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
             return list;
             }
 
-        private Booking makeGsonObject(String finalJson)
+        public Booking makeGsonObject(String finalJson)
             {
             Gson gson = new Gson();
             Booking bookingGson = gson.fromJson(finalJson, Booking.class);

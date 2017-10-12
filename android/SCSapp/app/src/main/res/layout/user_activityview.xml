@@ -59,12 +59,15 @@
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_editor_absoluteY="186dp">
 
-                <ListView
+                <include layout="@layout/user_show_active_bookingstest">
+
+                </include>
+               <!-- <ListView
                     android:id="@+id/lv_listOfActiveBookings"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
 
-                </ListView>
+                </ListView>-->
 
             </LinearLayout>
 

@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
 
 import sigma.scsapp.R;
@@ -44,15 +45,21 @@ public class UserProfileActivity extends AppCompatActivity
         User user = new User();
         JSONTaskVehicle mJsonTaskVehicle = new JSONTaskVehicle();
         JSONTaskBooking mJsonTaskBooking = new JSONTaskBooking();
+        ListView list1;
+        ListView list2;
 
+        HashMap<Integer, String> foundVehicles = new HashMap<>();
+        HashMap<Integer, String> foundBookings = new HashMap<>();
+
+        int recentlyBookedVehicleID = 3;
 
         @Override
         protected void onCreate(Bundle savedInstanceState)
             {
             String userId = "2"; //user.getId();
             String bookingId = null; //
-            String activeBookingsForUser = "users/"+ userId + "/bookings/";
-            String specifikBookingForUser = "users/"+ userId + "/bookings/" + bookingId;
+            String activeBookingsForUser = "users/" + userId + "/bookings/";
+            String specifikBookingForUser = "users/" + userId + "/bookings/" + bookingId;
             String getAllVehicle = "servertestvehicle.json";
             String getUser = "serveruser.json";
             String getAllBookings = "servertest.json";
@@ -63,11 +70,12 @@ public class UserProfileActivity extends AppCompatActivity
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
+
             mJsonTaskVehicle.delegate = this;
             mJsonTaskVehicle.execute(URL_TO_HIT + getAllVehicle);
 
-           mJsonTaskBooking.delegate = this;
-           mJsonTaskBooking.execute(URL_TO_HIT+getAllBookings);
+            mJsonTaskBooking.delegate = this;
+            mJsonTaskBooking.execute(URL_TO_HIT + getAllBookings);
 
 
             BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
@@ -202,12 +210,33 @@ public class UserProfileActivity extends AppCompatActivity
                 {
                 // the Adapter takes the Row-Layout, inserting the result into it.
                 VehicleAdapter adapter = new VehicleAdapter(UserProfileActivity.this, R.layout.activebooking_vehicle, output);
+
+
+                int noOfCars = adapter.vehicleList.size();
+
+
+                for (int pos = 0; pos < noOfCars; pos++) {
+                    System.out.println("The current car : " + adapter.vehicleList.get(pos).getModel());
+                    String vehicleModel = adapter.vehicleList.get(pos).getModel();
+
+                    System.out.println("The current site : " + adapter.vehicleList.get(pos).getSite());
+                    String vehicleSite = adapter.vehicleList.get(pos).getSite();
+
+                    int vehicleID = Integer.parseInt(adapter.vehicleList.get(pos).getVehicleId());
+                    System.out.println("The current ID in Vehicle : " + vehicleID);
+
+                    foundVehicles.put(vehicleID, vehicleModel + ", " + vehicleSite);
+
+
+                }
+
+
+
                 // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
-                ListView lvVehicle = (ListView) findViewById(R.id.lv_listOfActiveBookings);
+                list1 = (ListView) findViewById(R.id.test_listview1);
 
-
-                lvVehicle.setAdapter(adapter);
-                lvVehicle.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                list1.setAdapter(adapter);
+                list1.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {  // list item click opens a new detailed activity
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -215,7 +244,7 @@ public class UserProfileActivity extends AppCompatActivity
                             Vehicle booking = output.get(position); // getting the model
                             Intent intent = new Intent(UserProfileActivity.this, DetailActivity.class);
                             //intent.putExtra("bookingkey", new Gson().toJson(booking)); // converting model json into string type and sending it via intent
-                           // startActivity(intent);
+                            // startActivity(intent);
                             Toast.makeText(UserProfileActivity.this, "You clicked on your active booking", Toast.LENGTH_SHORT).show();
                             }
                     });
@@ -236,11 +265,28 @@ public class UserProfileActivity extends AppCompatActivity
                 {
                 // the Adapter takes the Row-Layout, inserting the result into it.
                 BookingAdapter adapter = new BookingAdapter(UserProfileActivity.this, R.layout.list_row_booking, output);
-                // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
-                ListView lvVehicle = (ListView) findViewById(R.id.lv_listOfActiveBookings);
 
-                lvVehicle.setAdapter(adapter);
-                lvVehicle.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                int noOfCars = adapter.bookingList.size();
+
+
+                for (int pos = 0; pos < noOfCars; pos++) {
+                    int vehicleID = Integer.parseInt(adapter.bookingList.get(pos).getVehicleId());
+                    System.out.println("The current ID in Booking : " + vehicleID);
+
+                    String vehicleBoookingInfo = adapter.bookingList.get(pos).getStartingDate();
+                    System.out.println("The current car : " + adapter.bookingList.get(pos));
+
+
+
+
+                //foundVehicles.put(vehicleID, vehicleModel + ", " + vehicleSite);
+                }
+
+                // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
+                list2 = (ListView) findViewById(R.id.test_listview2);
+
+                list2.setAdapter(adapter);
+                list2.setOnItemClickListener(new AdapterView.OnItemClickListener()
                     {  // list item click opens a new detailed activity
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -257,7 +303,10 @@ public class UserProfileActivity extends AppCompatActivity
                 Toast.makeText(UserProfileActivity.this, "Not able to fetch data from server, please check url.", Toast.LENGTH_SHORT).show();
                 }
 
+
             }
+
+
 
 
         public class VehicleAdapter extends ArrayAdapter
@@ -288,16 +337,16 @@ public class UserProfileActivity extends AppCompatActivity
                         // holder.tvId = (TextView) convertView.findViewById(R.id.tvId);
                         //holder.vehicleId = (TextView) convertView.findViewById(R.id.tvVehicleId);
                         //holder.reg = (TextView) convertView.findViewById(R.id.tvReg);
-                      //  holder.year = (TextView) convertView.findViewById(R.id.tv_item_name);
-                       // holder.mileage = (TextView) convertView.findViewById(R.id.tvMileage);
-                       // holder.body = (TextView) convertView.findViewById(R.id.tvBody);
-                       // holder.equipment = (TextView) convertView.findViewById(R.id.tvEquipment);
+                        //  holder.year = (TextView) convertView.findViewById(R.id.tv_item_name);
+                        // holder.mileage = (TextView) convertView.findViewById(R.id.tvMileage);
+                        // holder.body = (TextView) convertView.findViewById(R.id.tvBody);
+                        // holder.equipment = (TextView) convertView.findViewById(R.id.tvEquipment);
                         holder.model = (TextView) convertView.findViewById(R.id.tvModel);
                         holder.site = (TextView) convertView.findViewById(R.id.tvSite);
-                       // holder.responsible = (TextView) convertView.findViewById(R.id.tvResponsible);
-                       // holder.vehicleImage = (ImageView) convertView.findViewById(R.id.tvPurpose);
-                       // holder.isAvalible = (TextView) convertView.findViewById(R.id.tvIsAvalible);
-                       // holder.vehicleImageLink = (TextView) convertView.findViewById(R.id.tvVehicleImageLink);
+                        // holder.responsible = (TextView) convertView.findViewById(R.id.tvResponsible);
+                        // holder.vehicleImage = (ImageView) convertView.findViewById(R.id.tvPurpose);
+                        // holder.isAvalible = (TextView) convertView.findViewById(R.id.tvIsAvalible);
+                        // holder.vehicleImageLink = (TextView) convertView.findViewById(R.id.tvVehicleImageLink);
 
                         convertView.setTag(holder);
 
@@ -306,17 +355,17 @@ public class UserProfileActivity extends AppCompatActivity
                         holder = (ViewHolder) convertView.getTag();
                         }
                     //   holder.tvId.setText("Id" + vehicleList.get(position).getId());
-                  //  holder.vehicleId.setText(vehicleList.get(position).getVehicleId());
-                  //  holder.reg.setText(vehicleList.get(position).getReg());
-                  //  holder.year.setText(vehicleList.get(position).getYear());
-                  // holder.mileage.setText(vehicleList.get(position).getMileage());
-                   // holder.body.setText(vehicleList.get(position).getBody());
-                  //  holder.equipment.setText(vehicleList.get(position).getEquipment());
+                    //  holder.vehicleId.setText(vehicleList.get(position).getVehicleId());
+                    //  holder.reg.setText(vehicleList.get(position).getReg());
+                    //  holder.year.setText(vehicleList.get(position).getYear());
+                    // holder.mileage.setText(vehicleList.get(position).getMileage());
+                    // holder.body.setText(vehicleList.get(position).getBody());
+                    //  holder.equipment.setText(vehicleList.get(position).getEquipment());
                     holder.model.setText(vehicleList.get(position).getModel());
                     holder.site.setText(vehicleList.get(position).getSite());
-                   // holder.responsible.setText(vehicleList.get(position).getResponsible());
-                   // holder.vehicleImage.setimage(vehicleList.get(position).getVehicleImage());
-                   // holder.vehicleImageLink.setText(vehicleList.get(position).getVehicleImageLink());
+                    // holder.responsible.setText(vehicleList.get(position).getResponsible());
+                    // holder.vehicleImage.setimage(vehicleList.get(position).getVehicleImage());
+                    // holder.vehicleImageLink.setText(vehicleList.get(position).getVehicleImageLink());
 
 
                     return convertView;
@@ -343,8 +392,6 @@ public class UserProfileActivity extends AppCompatActivity
 
         public class BookingAdapter extends ArrayAdapter
             {
-
-
                 private List<Booking> bookingList;
                 private int resource;
                 private LayoutInflater inflater;
@@ -374,6 +421,8 @@ public class UserProfileActivity extends AppCompatActivity
                         holder.tvErrand = (TextView) convertView.findViewById(R.id.tvErrand);
                         holder.tvDestination = (TextView) convertView.findViewById(R.id.tvDestination);
                         holder.tvPurpose = (TextView) convertView.findViewById(R.id.tvPurpose);
+                        //holder.tvVehicleId = (TextView) convertView.findViewById(R.id.tvVehicleId);
+
                         convertView.setTag(holder);
 
                         } else
@@ -387,6 +436,8 @@ public class UserProfileActivity extends AppCompatActivity
                     holder.tvErrand.setText(bookingList.get(position).getErrand());
                     holder.tvDestination.setText(bookingList.get(position).getDestination());
                     holder.tvPurpose.setText(bookingList.get(position).getPurpose());
+                 //   holder.tvVehicleId.setText(bookingList.get(position).getVehicleId());
+
 
                     return convertView;
 
@@ -404,6 +455,8 @@ public class UserProfileActivity extends AppCompatActivity
                         private TextView tvErrand;
                         private TextView tvDestination;
                         private TextView tvPurpose;
+                        private TextView tvVehicleId;
+
                     }
             }
 
