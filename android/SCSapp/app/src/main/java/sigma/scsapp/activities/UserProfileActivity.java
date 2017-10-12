@@ -64,10 +64,10 @@ public class UserProfileActivity extends AppCompatActivity
             setSupportActionBar(toolbar);
 
             mJsonTaskVehicle.delegate = this;
-            mJsonTaskVehicle.execute(URL_TO_HIT+getAllVehicle);
+            mJsonTaskVehicle.execute(URL_TO_HIT + getAllVehicle);
 
-            mJsonTaskBooking.delegate = this;
-            mJsonTaskBooking.execute(URL_TO_HIT+getAllBookings);
+           mJsonTaskBooking.delegate = this;
+           mJsonTaskBooking.execute(URL_TO_HIT+getAllBookings);
 
 
             BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
@@ -201,9 +201,10 @@ public class UserProfileActivity extends AppCompatActivity
             if (output != null)
                 {
                 // the Adapter takes the Row-Layout, inserting the result into it.
-                VehicleAdapter adapter = new VehicleAdapter(UserProfileActivity.this, R.layout.list_row_active_booking, output);
+                VehicleAdapter adapter = new VehicleAdapter(UserProfileActivity.this, R.layout.activebooking_vehicle, output);
                 // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
                 ListView lvVehicle = (ListView) findViewById(R.id.lv_listOfActiveBookings);
+
 
                 lvVehicle.setAdapter(adapter);
                 lvVehicle.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -229,12 +230,12 @@ public class UserProfileActivity extends AppCompatActivity
         @Override
         public void processFinishBooking(final List<Booking> output)
             {
-            Log.i("Result tag Booking", " Result from JSONTASK: " + output);
+            Log.i("Result tag Booking", " Result from JSONTASKBooking: " + output);
             Log.i("OnPostExecute Booking", " Trying to finish up with Row into the List with result: " + output);
             if (output != null)
                 {
                 // the Adapter takes the Row-Layout, inserting the result into it.
-                BookingAdapter adapter = new BookingAdapter(UserProfileActivity.this, R.layout.list_row_active_booking, output);
+                BookingAdapter adapter = new BookingAdapter(UserProfileActivity.this, R.layout.list_row_booking, output);
                 // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
                 ListView lvVehicle = (ListView) findViewById(R.id.lv_listOfActiveBookings);
 
@@ -271,7 +272,6 @@ public class UserProfileActivity extends AppCompatActivity
                     {
                     super(context, resource, objects);
                     vehicleList = objects;
-                    Log.i("VehicleAdapter", "vehicleList got info: " + vehicleList);
                     this.resource = resource;
                     inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     }
@@ -363,6 +363,8 @@ public class UserProfileActivity extends AppCompatActivity
                     ViewHolder holder = null;
                     if (convertView == null)
                         {
+                        Log.i("BookingAdapter", "Starting the BookingAdapter");
+
                         holder = new ViewHolder();
                         convertView = inflater.inflate(resource, null);
                         holder.tvStartDate = (TextView) convertView.findViewById(R.id.tvStartDate);

@@ -34,7 +34,7 @@ import sigma.scsapp.utility.BottomNavigationViewHelper;
 
 public class LogActivity extends AppCompatActivity implements AsyncResponseBooking //implements BottomNavigationView.OnNavigationItemSelectedListener
     {
-        private final String URL_TO_HIT = "http://10.0.2.2:8000/serveruser.json";
+        private final String URL_TO_HIT = "http://10.0.2.2:8000/servertest.json";
         private TextView tvData;
         private ListView lvBookings;
         private ProgressDialog dialog;

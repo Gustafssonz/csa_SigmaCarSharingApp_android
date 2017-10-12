@@ -147,7 +147,7 @@ public class JSONTaskVehicle extends AsyncTask<String, String, List<Vehicle>>
                     }
                 Vehicle bookingGson = gson.fromJson(finalobject.toString(), Vehicle.class);
                 list.add(bookingGson);
-                Log.i("JSONTaskVehcile", "Returning the List from JSONtask");
+                Log.i("JSONTaskVehcile", "Returning the List from JSONtask with list:" + list);
 
                 }
             return list;

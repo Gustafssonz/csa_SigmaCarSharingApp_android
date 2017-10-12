@@ -170,4 +170,22 @@ public class Vehicle {
         {
         this.vehicleImageLink = vehicleImageLink;
         }
+
+    @Override
+    public String toString()
+        {
+        return "Vehicle{" +
+                "vehicleId='" + vehicleId + '\'' +
+                ", reg='" + reg + '\'' +
+                ", year='" + year + '\'' +
+                ", mileage='" + mileage + '\'' +
+                ", body='" + body + '\'' +
+                ", equipment='" + equipment + '\'' +
+                ", model='" + model + '\'' +
+                ", fuel='" + fuel + '\'' +
+                ", site='" + site + '\'' +
+                ", responsible='" + responsible + '\'' +
+                ", vehicleImageLink='" + vehicleImageLink + '\'' +
+                '}';
+        }
 }

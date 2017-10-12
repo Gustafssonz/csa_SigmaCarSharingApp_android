@@ -33,7 +33,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
     {
         public AsyncResponseBooking delegate = null;
 
-        private final static String URL_TO_HIT = "";
         private ProgressDialog dialog;
         private ListView lvBookings;
         public Activity activity;
@@ -42,7 +41,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
         @Override
         protected void onPreExecute()
             {
-            Log.i("JSONTaskBooking", "Start the JSONTaskBooking with url: " + URL_TO_HIT);
             super.onPreExecute();
 //            dialog.show();
             }
@@ -58,7 +56,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-                Log.i("JSONTaskBooking", "Still trying to connect ... ");
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
 
@@ -149,7 +146,7 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
                     }
                 Booking bookingGson = gson.fromJson(finalobject.toString(), Booking.class);
                 list.add(bookingGson);
-                Log.i("JSONTaskBooking", "Returning the List from JSONtask");
+                Log.i("JSONTaskBooking", "Returning the List from JSONtask with list" + list);
 
                 }
             return list;

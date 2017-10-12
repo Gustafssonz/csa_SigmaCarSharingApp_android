@@ -55,7 +55,7 @@ public class BookingActivity extends Activity
             /*
              * Avilable car list
              */
-
+/*
             ListView carlist = (ListView) findViewById(R.id.lvBookingListOfCars);
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, car);
             carlist.setAdapter(arrayAdapter);
@@ -72,7 +72,7 @@ public class BookingActivity extends Activity
                         booking_form.putExtra("carname", selectedcar);
                         // TODO: 2017-09-21 request a timer for completion of the booking.
                         }
-                });
+                });*/
 
 
             /*
