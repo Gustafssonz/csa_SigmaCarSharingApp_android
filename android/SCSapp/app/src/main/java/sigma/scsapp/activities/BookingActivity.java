@@ -143,11 +143,18 @@ public class BookingActivity extends Activity
                                                 int groupPosition, int childPosition, long id)
                         {
                         int position = (childPosition + 1);
+                        startDateSelection();
                         String postString = String.valueOf(position);
                         TextView selectedRegion = (TextView) findViewById(R.id.tv_bookingactivity_selected_region);
 
 
                         selectedRegion.setText(postString);
+                        Intent startBooking = new Intent(BookingActivity.this, BookingFormActivity.class);
+                        startBooking.putExtra("site", postString);
+                        startActivity(startBooking);
+
+
+
                         Log.e("Child click", "You clicked on site with name: " + (postString));
                         expListView.collapseGroup(groupPosition);
                         Toast.makeText(
@@ -159,6 +166,11 @@ public class BookingActivity extends Activity
                                         childPosition), Toast.LENGTH_SHORT)
                                 .show();
                         return false;
+                        }
+
+                    private void startDateSelection()
+                        {
+
                         }
                 });
 
@@ -181,4 +193,6 @@ public class BookingActivity extends Activity
 
 
     }
+
+
 
