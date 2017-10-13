@@ -24,6 +24,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,16 +55,22 @@ public class UserProfileActivity extends AppCompatActivity
 
         int recentlyBookedVehicleID = 3;
 
+        String userId = "2"; //user.getId();
+        String bookingId = null; //
+        String activeBookingsForUser = "users/" + userId + "/bookings/";
+        String specifikBookingForUser = "users/" + userId + "/bookings/" + bookingId;
+        String getAllVehicle = "servertestvehicle.json";
+        String getUser = "serveruser.json";
+        String getAllBookings = "servertest.json";
+        String getActiveBookingVehicle = "vehicle2.json";
+        String getActiveBookingBooking = "booking2.json";
+
+        Gson gson = new Gson();
+
         @Override
         protected void onCreate(Bundle savedInstanceState)
             {
-            String userId = "2"; //user.getId();
-            String bookingId = null; //
-            String activeBookingsForUser = "users/" + userId + "/bookings/";
-            String specifikBookingForUser = "users/" + userId + "/bookings/" + bookingId;
-            String getAllVehicle = "servertestvehicle.json";
-            String getUser = "serveruser.json";
-            String getAllBookings = "servertest.json";
+
 
 
             super.onCreate(savedInstanceState);
@@ -72,10 +80,11 @@ public class UserProfileActivity extends AppCompatActivity
 
 
             mJsonTaskVehicle.delegate = this;
-            mJsonTaskVehicle.execute(URL_TO_HIT + getAllVehicle);
+            mJsonTaskVehicle.execute(URL_TO_HIT + getActiveBookingVehicle);
 
             mJsonTaskBooking.delegate = this;
-            mJsonTaskBooking.execute(URL_TO_HIT + getAllBookings);
+            mJsonTaskBooking.execute(URL_TO_HIT + getActiveBookingBooking);
+
 
 
             BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
@@ -98,8 +107,8 @@ public class UserProfileActivity extends AppCompatActivity
                                 break;
 
                             case R.id.ic_center_focus:
-                                // Intent intent3 = new Intent(UserProfileActivity.this, LogActivity.class);
-                                // startActivity(intent3);
+                                 Intent intent3 = new Intent(UserProfileActivity.this, MapsActivity.class);
+                                 startActivity(intent3);
                                 break;
 
                             case R.id.ic_backup:
@@ -241,13 +250,15 @@ public class UserProfileActivity extends AppCompatActivity
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
-                            Vehicle booking = output.get(position); // getting the model
-                            Intent intent = new Intent(UserProfileActivity.this, DetailActivity.class);
+                            //Intent intent = new Intent(UserProfileActivity.this, ActiveBookingsActivity.class);
+                            //startActivity(intent);
+                            //Booking booking = output.get(position); // getting the model
                             //intent.putExtra("bookingkey", new Gson().toJson(booking)); // converting model json into string type and sending it via intent
-                            // startActivity(intent);
                             Toast.makeText(UserProfileActivity.this, "You clicked on your active booking", Toast.LENGTH_SHORT).show();
+
                             }
                     });
+
                 } else
                 {
                 Toast.makeText(UserProfileActivity.this, "Not able to fetch data from server, please check url.", Toast.LENGTH_SHORT).show();
@@ -283,7 +294,7 @@ public class UserProfileActivity extends AppCompatActivity
                 }
 
                 // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
-                list2 = (ListView) findViewById(R.id.test_listview2);
+                list2 = (ListView) findViewById(R.id.lv_activeBookings);
 
                 list2.setAdapter(adapter);
                 list2.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -292,9 +303,9 @@ public class UserProfileActivity extends AppCompatActivity
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
                             Booking booking = output.get(position); // getting the model
-                            Intent intent = new Intent(UserProfileActivity.this, DetailActivity.class);
+                            Intent intent = new Intent(UserProfileActivity.this, ActiveBookingsActivity.class);
                             //intent.putExtra("bookingkey", new Gson().toJson(booking)); // converting model json into string type and sending it via intent
-                            // startActivity(intent);
+                             startActivity(intent);
                             Toast.makeText(UserProfileActivity.this, "You clicked on your active booking", Toast.LENGTH_SHORT).show();
                             }
                     });

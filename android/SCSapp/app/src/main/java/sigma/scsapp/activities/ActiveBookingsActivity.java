@@ -26,15 +26,17 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.util.List;
 
 import sigma.scsapp.R;
-import sigma.scsapp.fragment.TimePickerFragment;
 import sigma.scsapp.controllers.JSONTaskBooking;
+import sigma.scsapp.fragment.TimePickerFragment;
 import sigma.scsapp.model.Booking;
 import sigma.scsapp.utility.AsyncResponseBooking;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
-public class LogActivity extends AppCompatActivity implements AsyncResponseBooking //implements BottomNavigationView.OnNavigationItemSelectedListener
+public class ActiveBookingsActivity extends AppCompatActivity implements AsyncResponseBooking //implements BottomNavigationView.OnNavigationItemSelectedListener
     {
-        private final String URL_TO_HIT = "http://10.0.2.2:8000/servertest.json";
+        private final String URL_TO_HIT = "http://10.0.2.2:8000/";
+        String getActiveBookingBooking = "booking2.json";
+
         private TextView tvData;
         private ListView lvBookings;
         private ProgressDialog dialog;
@@ -50,7 +52,7 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
         protected void onCreate(Bundle savedInstanceState)
             {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.log_list);
+            setContentView(R.layout.booking_activebookings);
 
 
             dialog = new ProgressDialog(this);
@@ -68,45 +70,12 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
                     .build();
             ImageLoader.getInstance().init(config); // Do it on Application start
 
-            lvBookings = (ListView) findViewById(R.id.LV_list);
+            lvBookings = (ListView) findViewById(R.id.lv_activeBookings);
 
 
             // To start fetching the data when app start, uncomment below line to start the async task.
             myJsonTask.delegate = this;
-            myJsonTask.execute(URL_TO_HIT);
-
-
-            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
-            BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-            Menu menu = bottomNavigationView.getMenu();
-            MenuItem menuItem = menu.getItem(0);
-            menuItem.setChecked(true);
-
-            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-
-                case R.id.ic_books:
-                    Intent intent2 = new Intent(LogActivity.this, BookingActivity.class);
-                    startActivity(intent2);
-                    break;
-
-                case R.id.ic_center_focus:
-                    Intent intent3 = new Intent(LogActivity.this, MapsActivity.class);
-                    startActivity(intent3);
-                    break;
-
-                case R.id.ic_backup:
-
-
-                    break;
-                }
-
-
-                return false;
-                }
-            });
+            myJsonTask.execute(URL_TO_HIT + getActiveBookingBooking);
 
             }
 
@@ -144,7 +113,7 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
             if (output != null)
                 {
                 // the Adapter takes the Row-Layout, inserting the result into it.
-                BookingAdapter adapter = new BookingAdapter(LogActivity.this, R.layout.list_row_booking, output);
+                BookingAdapter adapter = new BookingAdapter(ActiveBookingsActivity.this, R.layout.list_row_booking, output);
                 // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
                 lvBookings.setAdapter(adapter);
                 lvBookings.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -153,14 +122,14 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
                             Booking booking = output.get(position); // getting the model
-                            Intent intent = new Intent(LogActivity.this, DetailActivity.class);
+                            Intent intent = new Intent(ActiveBookingsActivity.this, DetailActivity.class);
                             //intent.putExtra("bookingkey", new Gson().toJson(booking)); // converting model json into string type and sending it via intent
                             startActivity(intent);
                             }
                     });
                 } else
                 {
-                Toast.makeText(LogActivity.this, "Not able to fetch data from server, please check url.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActiveBookingsActivity.this, "Not able to fetch data from server, please check url.", Toast.LENGTH_SHORT).show();
                 }
 
             }

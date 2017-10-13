@@ -18,10 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +29,8 @@ public class BookingActivity extends Activity
         ExpandableListView expListView;
         List<String> listDataHeader;
         HashMap<String, List<String>> listDataChild;
+        TextView tv_resultStartDateTime;
+        TextView tv_resultEndDateTime;
 
         ArrayList<String> car;
 
@@ -47,32 +46,6 @@ public class BookingActivity extends Activity
 
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
             expListView.setAdapter(listAdapter);
-
-
-
-
-
-            /*
-             * Avilable car list
-             */
-/*
-            ListView carlist = (ListView) findViewById(R.id.lvBookingListOfCars);
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, car);
-            carlist.setAdapter(arrayAdapter);
-            carlist.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                {
-                    // argument position gives the index of item which is clicked
-                    public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3)
-                        {
-                        String selectedcar = car.get(position);
-                        Log.i("Car TAG", "You have selected " + selectedcar);
-
-                        Intent booking_form = new Intent();
-                        startActivity(new Intent(BookingActivity.this, BookingFormActivity.class));
-                        booking_form.putExtra("carname", selectedcar);
-                        // TODO: 2017-09-21 request a timer for completion of the booking.
-                        }
-                });*/
 
 
             /*
@@ -97,8 +70,8 @@ public class BookingActivity extends Activity
                                 break;
 
                             case R.id.ic_center_focus:
-                                //   Intent intent3 = new Intent(BookingActivity.this, MapActivity.class);
-                                //   startActivity(intent3);
+                                   Intent intent3 = new Intent(BookingActivity.this, MapsActivity.class);
+                                   startActivity(intent3);
                                 break;
 
                             case R.id.ic_backup:
@@ -164,6 +137,7 @@ public class BookingActivity extends Activity
                                         + listDataChild.get(
                                         listDataHeader.get(groupPosition)).get(
                                         childPosition), Toast.LENGTH_SHORT)
+
                                 .show();
                         return false;
                         }
@@ -187,6 +161,15 @@ public class BookingActivity extends Activity
                                 Toast.LENGTH_SHORT).show();
                         }
                 });
+
+            tv_resultStartDateTime = (TextView) findViewById(R.id.tv_resultStartDateTime);
+            Intent fetchData = getIntent();
+            String resultStartDataTime = fetchData.getStringExtra("ResultStart");
+            tv_resultStartDateTime.setText(resultStartDataTime);
+
+            tv_resultEndDateTime = (TextView) findViewById(R.id.tv_resultEndDateTime);
+            String resultEndDateTime = fetchData.getStringExtra("ResultEnd");
+            tv_resultEndDateTime.setText(resultEndDateTime);
 
 
             }
