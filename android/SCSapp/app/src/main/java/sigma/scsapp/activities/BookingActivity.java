@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import sigma.scsapp.R;
+import sigma.scsapp.fragment.DestinationDialogFragment;
 import sigma.scsapp.utility.ExpandableListAdapter;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
@@ -18,6 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +35,15 @@ public class BookingActivity extends Activity
         HashMap<String, List<String>> listDataChild;
         TextView tv_resultStartDateTime;
         TextView tv_resultEndDateTime;
+
+        TextView tv_currentTime;
+
+        Button btn_errand;
+        Button btn_purpose;
+        Button btn_destination;
+
+        EditText et_destination;
+
 
         ArrayList<String> car;
 
@@ -70,8 +83,8 @@ public class BookingActivity extends Activity
                                 break;
 
                             case R.id.ic_center_focus:
-                                   Intent intent3 = new Intent(BookingActivity.this, MapsActivity.class);
-                                   startActivity(intent3);
+                                Intent intent3 = new Intent(BookingActivity.this, MapsActivity.class);
+                                startActivity(intent3);
                                 break;
 
                             case R.id.ic_backup:
@@ -127,7 +140,6 @@ public class BookingActivity extends Activity
                         startActivity(startBooking);
 
 
-
                         Log.e("Child click", "You clicked on site with name: " + (postString));
                         expListView.collapseGroup(groupPosition);
                         Toast.makeText(
@@ -171,11 +183,7 @@ public class BookingActivity extends Activity
             String resultEndDateTime = fetchData.getStringExtra("ResultEnd");
             tv_resultEndDateTime.setText(resultEndDateTime);
 
+            et_destination  = (EditText) findViewById(R.id.et_destination);
 
             }
-
-
     }
-
-
-

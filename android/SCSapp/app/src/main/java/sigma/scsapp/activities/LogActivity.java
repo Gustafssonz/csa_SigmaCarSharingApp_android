@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.util.List;
 
 import sigma.scsapp.R;
+import sigma.scsapp.adapters.BookingAdapter;
 import sigma.scsapp.fragment.TimePickerFragment;
 import sigma.scsapp.controllers.JSONTaskBooking;
 import sigma.scsapp.model.Booking;
@@ -144,7 +145,7 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
             if (output != null)
                 {
                 // the Adapter takes the Row-Layout, inserting the result into it.
-                BookingAdapter adapter = new BookingAdapter(LogActivity.this, R.layout.list_row_booking, output);
+                BookingAdapter adapter = new BookingAdapter(this, LogActivity.this, R.layout.list_row_booking, output);
                 // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
                 lvBookings.setAdapter(adapter);
                 lvBookings.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -153,9 +154,9 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                             {
                             Booking booking = output.get(position); // getting the model
-                            Intent intent = new Intent(LogActivity.this, DetailActivity.class);
+                           // Intent intent = new Intent(LogActivity.this, DetailActivity.class);
                             //intent.putExtra("bookingkey", new Gson().toJson(booking)); // converting model json into string type and sending it via intent
-                            startActivity(intent);
+                           // startActivity(intent);
                             }
                     });
                 } else
@@ -164,75 +165,5 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
                 }
 
             }
-        public class BookingAdapter extends ArrayAdapter
-            {
 
-
-                private List<Booking> bookingList;
-                private int resource;
-                private LayoutInflater inflater;
-
-                public BookingAdapter(Context context, int resource, List<Booking> objects)
-                    {
-                    super(context, resource, objects);
-                    bookingList = objects;
-                    Log.i("VehicleAdapter", "bookingList got info: " + bookingList);
-                    this.resource = resource;
-                    inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    }
-
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent)
-                    {
-                    Log.i("VehicleAdapter", "Starting the VehicleAdapter");
-                    ViewHolder holder = null;
-                    if (convertView == null)
-                        {
-                        holder = new ViewHolder();
-                        convertView = inflater.inflate(resource, null);
-                        // holder.tvId = (TextView) convertView.findViewById(R.id.tvId);
-                      //  holder.tvTimeOfBooking = (TextView) convertView.findViewById(R.id.tvTimeOfBooking);
-                        holder.tvStartDate = (TextView) convertView.findViewById(R.id.tvStartDate);
-                        holder.tvStartTime = (TextView) convertView.findViewById(R.id.tvStartTime);
-                        holder.tvEndDate = (TextView) convertView.findViewById(R.id.tvEndDate);
-                        holder.tvEndTime = (TextView) convertView.findViewById(R.id.tvEndTime);
-                        //  holder.tvIsConfirmed = (TextView) convertView.findViewById(R.id.tvIsConfirmed);
-                        holder.tvErrand = (TextView) convertView.findViewById(R.id.tvErrand);
-                        holder.tvDestination = (TextView) convertView.findViewById(R.id.tvDestination);
-                        holder.tvPurpose = (TextView) convertView.findViewById(R.id.tvPurpose);
-                        convertView.setTag(holder);
-
-                        } else
-                        {
-                        holder = (ViewHolder) convertView.getTag();
-                        }
-                    //   holder.tvId.setText("Id" + bookingList.get(position).getId());
-                   // holder.tvTimeOfBooking.setText(bookingList.get(position).getTimeOfBooking());
-                    holder.tvStartDate.setText(bookingList.get(position).getStartingDate());
-                    holder.tvStartTime.setText(bookingList.get(position).getStartingTime());
-                    holder.tvEndDate.setText(bookingList.get(position).getEndingDate());
-                    holder.tvEndTime.setText(bookingList.get(position).getEndingTime());
-                    //  holder.tvIsConfirmed.setText("Is confirmed? : " + bookingList.get(position).getIsConfirmed());
-                    holder.tvErrand.setText(bookingList.get(position).getErrand());
-                    holder.tvDestination.setText(bookingList.get(position).getDestination());
-                    holder.tvPurpose.setText(bookingList.get(position).getPurpose());
-
-                    return convertView;
-
-                    }
-
-                class ViewHolder
-                    {
-                        private TextView tvId;
-                        private TextView tvTimeOfBooking;
-                        private TextView tvStartDate;
-                        private TextView tvStartTime;
-                        private TextView tvEndDate;
-                        private TextView tvEndTime;
-                        private TextView tvIsConfirmed;
-                        private TextView tvErrand;
-                        private TextView tvDestination;
-                        private TextView tvPurpose;
-                    }
-            }
     }

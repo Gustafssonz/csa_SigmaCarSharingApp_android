@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             // TODO User with it's information. Confirm true or false
             // Profile login ---  Profile Info
-            "ngn:1234: id:2"
+            "ngn:1234: name:Niklas Gustafsson"
     };
 
 
@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            // perform the user attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(UserId, password);
             mAuthTask.execute((Void) null);

@@ -1,18 +1,12 @@
 package sigma.scsapp.activities;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.icu.util.Calendar;
-import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
-
-import java.text.DateFormat;
 
 import sigma.scsapp.R;
 import sigma.scsapp.fragment.DatePickerFragment;
@@ -57,7 +51,7 @@ public class BookingFormActivity
         protected void onCreate(Bundle savedInstanceState)
             {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.bookingform_activity);
+            setContentView(R.layout.booking_timepicker);
 
             btn_done_resultDateTime = (Button) findViewById(R.id.btn_ResultDateTime);
             btn_done_resultDateTime.setOnClickListener(new View.OnClickListener()
