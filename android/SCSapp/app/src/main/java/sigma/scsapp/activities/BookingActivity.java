@@ -1,6 +1,7 @@
 package sigma.scsapp.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -183,7 +185,16 @@ public class BookingActivity extends Activity
             String resultEndDateTime = fetchData.getStringExtra("ResultEnd");
             tv_resultEndDateTime.setText(resultEndDateTime);
 
-            et_destination  = (EditText) findViewById(R.id.et_destination);
+
+
+
 
             }
+        public void showSoftKeyboard(View view) {
+        if (view.requestFocus()) {
+        InputMethodManager imm = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+        }
     }
