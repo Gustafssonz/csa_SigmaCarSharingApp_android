@@ -73,7 +73,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <Button
-            android:id="@+id/btn_info_done"
+            android:id="@+id/btn_bookingInfo_accepted"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"

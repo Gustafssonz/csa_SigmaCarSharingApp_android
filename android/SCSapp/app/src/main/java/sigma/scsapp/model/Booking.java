@@ -176,10 +176,9 @@ public class Booking
 
 
         @Override
-        public String toString()
-            {
+        public String toString() {
             return "Booking{" +
-                    "id=" + id +
+                    "id='" + id + '\'' +
                     ", timeOfBooking='" + timeOfBooking + '\'' +
                     ", startingDate='" + startingDate + '\'' +
                     ", startingTime='" + startingTime + '\'' +
@@ -189,6 +188,8 @@ public class Booking
                     ", destination='" + destination + '\'' +
                     ", purpose='" + purpose + '\'' +
                     ", isConfirmed=" + isConfirmed +
+                    ", userId='" + userId + '\'' +
+                    ", vehicleId='" + vehicleId + '\'' +
                     '}';
-            }
+        }
     }

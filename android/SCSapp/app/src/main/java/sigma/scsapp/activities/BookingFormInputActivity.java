@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import sigma.scsapp.R;
+import sigma.scsapp.*;
 
 public class BookingFormInputActivity extends AppCompatActivity
     {

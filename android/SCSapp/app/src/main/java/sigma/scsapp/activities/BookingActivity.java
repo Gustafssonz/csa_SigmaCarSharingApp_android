@@ -1,7 +1,6 @@
 package sigma.scsapp.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import sigma.scsapp.R;
-import sigma.scsapp.fragment.DestinationDialogFragment;
 import sigma.scsapp.utility.ExpandableListAdapter;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
@@ -20,8 +18,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -35,24 +31,25 @@ public class BookingActivity extends Activity
         ExpandableListView expListView;
         List<String> listDataHeader;
         HashMap<String, List<String>> listDataChild;
+        private String site;
+
+        // Date Time Data
         TextView tv_resultStartDateTime;
         TextView tv_resultEndDateTime;
 
-        TextView tv_currentTime;
 
-        Button btn_errand;
-        Button btn_purpose;
-        Button btn_destination;
-
+        // Booking info data
+        EditText et_errand;
+        EditText et_purpose;
         EditText et_destination;
+        Button btn_bookingInfo_completed;
 
-
-        ArrayList<String> car;
-
+        private String errandResult;
+        private String purposeResult;
+        private String destinationResult;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState)
-            {
+        protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.booking_activityview);
 
@@ -61,6 +58,26 @@ public class BookingActivity extends Activity
 
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
             expListView.setAdapter(listAdapter);
+
+
+            et_errand = (EditText) findViewById(R.id.et_errand);
+            et_purpose = (EditText) findViewById(R.id.et_purpose);
+            et_destination = (EditText) findViewById(R.id.et_destination);
+
+
+            errandResult = (String) et_errand.getText().toString();
+            purposeResult = (String) et_purpose.getText().toString();
+            destinationResult = (String) et_destination.getText().toString();
+
+            btn_bookingInfo_completed = (Button) findViewById(R.id.btn_bookingInfo_accepted);
+            btn_bookingInfo_completed.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                        {
+                        Log.i("BookingActivity", " info" + errandResult + " -" + purposeResult + " - " + destinationResult);
+                        }
+                });
 
 
             /*
@@ -133,16 +150,17 @@ public class BookingActivity extends Activity
                         int position = (childPosition + 1);
                         startDateSelection();
                         String postString = String.valueOf(position);
-                        TextView selectedRegion = (TextView) findViewById(R.id.tv_bookingactivity_selected_region);
+                        TextView selectedRegion = (TextView) findViewById(R.id.tv_select_site);
 
 
                         selectedRegion.setText(postString);
+                        site = selectedRegion.toString();
+                        Log.i("BookingInfo", "Selected site is:" + site);
+
                         Intent startBooking = new Intent(BookingActivity.this, BookingFormActivity.class);
                         startBooking.putExtra("site", postString);
                         startActivity(startBooking);
 
-
-                        Log.e("Child click", "You clicked on site with name: " + (postString));
                         expListView.collapseGroup(groupPosition);
                         Toast.makeText(
                                 getApplicationContext(),
@@ -186,15 +204,14 @@ public class BookingActivity extends Activity
             tv_resultEndDateTime.setText(resultEndDateTime);
 
 
-
-
-
             }
-        public void showSoftKeyboard(View view) {
+
+
+        /*public void showSoftKeyboard(View view) {
         if (view.requestFocus()) {
         InputMethodManager imm = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }
-        }
+        }*/
     }
