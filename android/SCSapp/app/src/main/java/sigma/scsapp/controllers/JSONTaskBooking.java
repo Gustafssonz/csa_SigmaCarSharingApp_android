@@ -33,7 +33,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
     {
         public AsyncResponseBooking delegate = null;
 
-        private final static String URL_TO_HIT = "";
         private ProgressDialog dialog;
         private ListView lvBookings;
         public Activity activity;
@@ -42,7 +41,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
         @Override
         protected void onPreExecute()
             {
-            Log.i("JSONTaskBooking", "Start the JSONTaskBooking with url: " + URL_TO_HIT);
             super.onPreExecute();
 //            dialog.show();
             }
@@ -58,7 +56,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-                Log.i("JSONTaskBooking", "Still trying to connect ... ");
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
 
@@ -74,7 +71,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
                 Log.i("JSONTaskBooking", "FinalJson is now: " + finalJson);
 
                 JSONObject parentObject = new JSONObject(finalJson);
-// TODO: 2017-10-11  Fixa så att Vehicle syns i Result i tagg 
                 try
                     {
                     List<Booking> list;
@@ -92,14 +88,7 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
 
                     }
 
-
-                } catch (MalformedURLException e)
-                {
-                e.printStackTrace();
-                } catch (IOException e)
-                {
-                e.printStackTrace();
-                } catch (JSONException e)
+                } catch (JSONException | IOException e)
                 {
                 e.printStackTrace();
                 } finally
@@ -133,7 +122,7 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
 
             }
 
-        private List<Booking> makeGsonArray(JSONArray parentArray)
+        public List<Booking> makeGsonArray(JSONArray parentArray)
             {
             List<Booking> list = new ArrayList<>();
             Gson gson = new Gson();
@@ -149,13 +138,13 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
                     }
                 Booking bookingGson = gson.fromJson(finalobject.toString(), Booking.class);
                 list.add(bookingGson);
-                Log.i("JSONTaskBooking", "Returning the List from JSONtask");
+                Log.i("JSONTaskBooking", "Returning the List from JSONtask with list" + list);
 
                 }
             return list;
             }
 
-        private Booking makeGsonObject(String finalJson)
+        public Booking makeGsonObject(String finalJson)
             {
             Gson gson = new Gson();
             Booking bookingGson = gson.fromJson(finalJson, Booking.class);

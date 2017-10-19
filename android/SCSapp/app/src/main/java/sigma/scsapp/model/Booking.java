@@ -31,7 +31,7 @@ public class Booking
             {
             }
 
-        public Booking(String id, String timeOfBooking, String startingDate, String startingTime, String endingDate, String endingTime, String errand, String destination, String purpose, Boolean isConfirmed)
+        public Booking(String id, String timeOfBooking, String startingDate, String startingTime, String endingDate, String endingTime, String errand, String destination, String purpose, Boolean isConfirmed, String userId, String vehicleId)
             {
             this.id = id;
             this.timeOfBooking = timeOfBooking;
@@ -43,6 +43,8 @@ public class Booking
             this.destination = destination;
             this.purpose = purpose;
             this.isConfirmed = isConfirmed;
+            this.userId = userId;
+            this.vehicleId = vehicleId;
             }
 
         public String getId()
@@ -174,10 +176,9 @@ public class Booking
 
 
         @Override
-        public String toString()
-            {
+        public String toString() {
             return "Booking{" +
-                    "id=" + id +
+                    "id='" + id + '\'' +
                     ", timeOfBooking='" + timeOfBooking + '\'' +
                     ", startingDate='" + startingDate + '\'' +
                     ", startingTime='" + startingTime + '\'' +
@@ -187,6 +188,8 @@ public class Booking
                     ", destination='" + destination + '\'' +
                     ", purpose='" + purpose + '\'' +
                     ", isConfirmed=" + isConfirmed +
+                    ", userId='" + userId + '\'' +
+                    ", vehicleId='" + vehicleId + '\'' +
                     '}';
-            }
+        }
     }
