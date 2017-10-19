@@ -38,122 +38,187 @@
                     android:id="@+id/rl_booking_nested_info_window">
 
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/cl_picking_site"
-                        android:layout_width="380dp"
+                        android:id="@+id/cl_booking_site"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_alignStart="@+id/cl_booking_date_time"
+                        android:layout_marginTop="13dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        >
+                        app:layout_constraintTop_toTopOf="parent">
 
-
-                        <TextView
-                            android:id="@+id/tv_select_site"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="0dp"
-                            android:layout_marginRight="135dp"
-                            android:ems="10"
-                            android:inputType="text"
-                            android:text="Select Site"
-                            android:textAlignment="center"
-                            app:layout_constraintBottom_toTopOf="@+id/exvListView"
-                            app:layout_constraintRight_toRightOf="parent"
-                            />
 
                         <ExpandableListView
                             android:id="@+id/exvListView"
                             android:layout_width="302dp"
                             android:layout_height="150dp"
-                            android:layout_marginRight="-2dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="24dp"
                             android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            />
+                            app:layout_constraintTop_toBottomOf="@+id/tv_select_site"/>
+
+                        <TextView
+                            android:id="@+id/tv_select_site"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="16dp"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:text="Select Site"
+                            android:textAlignment="center"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
                     </android.support.constraint.ConstraintLayout>
 
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/cl_booking_date_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        android:layout_below="@id/cl_booking_site"
+                        android:layout_marginTop="24dp"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_resultEndDateTime"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_marginTop="16dp"
+                            android:text="ResultDate/time"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tv_resultStartDateTime"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="ResultDate/Time"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <ListView
+                                android:id="@+id/lv_listOfAvalibleVehicles"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.556"/>
+
+                        </android.support.constraint.ConstraintLayout>
+
+                    </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/cl_booking_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/cl_picking_site"
+                        android:layout_below="@+id/cl_booking_date_time"
+                        android:layout_marginTop="24dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cl_date_time">
+                        >
 
 
                         <EditText
                             android:id="@+id/et_destination"
-                            android:layout_width="300dp"
-                            android:layout_height="100dp"
+                            android:layout_width="301dp"
+                            android:layout_height="65dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginTop="8dp"
                             android:ems="10"
                             android:gravity="top|left"
                             android:hint="Destination"
-                            android:inputType="text|textMultiLine"
-                            android:lines="4"
+                            android:inputType="textShortMessage"
+                            android:lines="1"
                             android:maxLength="40"
-                            android:maxLines="4"
                             android:scrollbars="vertical"
                             android:visibility="visible"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_purpose"/>
+                            app:layout_constraintTop_toBottomOf="@+id/et_purpose"
+                            tools:layout_editor_absoluteX="41dp"
+                            tools:layout_editor_absoluteY="262dp"/>
 
                         <EditText
                             android:id="@+id/et_purpose"
                             android:layout_width="300dp"
-                            android:layout_height="100dp"
+                            android:layout_height="65dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginTop="8dp"
                             android:ems="10"
                             android:hint="Purpose"
-                            android:inputType="textMultiLine|textShortMessage"
-                            android:lines="4"
+                            android:inputType="textShortMessage"
+                            android:lines="1"
                             android:maxLength="40"
-                            android:maxLines="4"
                             android:visibility="visible"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/et_errand"/>
 
                         <EditText
                             android:id="@+id/et_errand"
                             android:layout_width="300dp"
-                            android:layout_height="100dp"
+                            android:layout_height="65dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
                             android:layout_marginTop="8dp"
                             android:dropDownHeight="wrap_content"
                             android:ems="10"
                             android:hint="Errand"
-                            android:inputType="textLongMessage"
-                            android:lines="4"
+                            android:inputType="textShortMessage"
+                            android:lines="1"
                             android:maxLength="40"
-                            android:maxLines="4"
                             android:visibility="visible"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:layout_marginRight="8dp"
-                            app:layout_constraintRight_toRightOf="parent"/>
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
-                        <Button
+                    <!-- <Button
                             android:id="@+id/btn_bookingInfo_accepted"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_marginTop="64dp"
+                            android:layout_marginTop="25dp"
                             android:text="Done"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/et_destination"/>
+                            app:layout_constraintTop_toBottomOf="@+id/et_destination"/> -->
 
                         <!-- todo add buttons for text -->
 
@@ -170,41 +235,21 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/cl_date_time"
-                        android:layout_width="368dp"
-                        android:layout_height="60dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@id/cl_booking_info"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cl_picking_site">
+                        android:id="@+id/cl_booking_finish"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/cl_booking_info">
 
-                        <TextView
-                            android:id="@+id/tv_resultEndDateTime"
-                            android:layout_width="140dp"
-                            android:layout_height="50dp"
-                            android:layout_marginEnd="8dp"
+                        <Button
+                            android:id="@+id/btn_bookingInfo_accepted"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="ResultDate/time"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-
-                        <TextView
-                            android:id="@+id/tv_resultStartDateTime"
-                            android:layout_width="140dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:text="ResultDate/Time"
+                            android:layout_marginTop="0dp"
+                            android:text="Done"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintRight_toRightOf="parent"/>
                     </android.support.constraint.ConstraintLayout>
                 </RelativeLayout>
         </ScrollView>

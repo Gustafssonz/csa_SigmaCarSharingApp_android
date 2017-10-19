@@ -40,39 +40,36 @@ public class VehicleAdapter extends ArrayAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(resource, null);
-            // holder.tvId = (TextView) convertView.findViewById(R.id.tvId);
-            //holder.vehicleId = (TextView) convertView.findViewById(R.id.tvVehicleId);
-            //holder.reg = (TextView) convertView.findViewById(R.id.tvReg);
-            //  holder.year = (TextView) convertView.findViewById(R.id.tv_item_name);
-            // holder.mileage = (TextView) convertView.findViewById(R.id.tvMileage);
-            // holder.body = (TextView) convertView.findViewById(R.id.tvBody);
-            // holder.equipment = (TextView) convertView.findViewById(R.id.tvEquipment);
-            holder.model = (TextView) convertView.findViewById(R.id.tvModel);
-            holder.site = (TextView) convertView.findViewById(R.id.tvSite);
-            // holder.responsible = (TextView) convertView.findViewById(R.id.tvResponsible);
-            // holder.vehicleImage = (ImageView) convertView.findViewById(R.id.tvPurpose);
-            // holder.isAvalible = (TextView) convertView.findViewById(R.id.tvIsAvalible);
-            // holder.vehicleImageLink = (TextView) convertView.findViewById(R.id.tvVehicleImageLink);
+            holder.vehicleId = (TextView) convertView.findViewById(R.id.tv_vehicleId);
+            holder.reg = (TextView) convertView.findViewById(R.id.tv_reg);
+            holder.year = (TextView) convertView.findViewById(R.id.tv_year);
+            holder.mileage = (TextView) convertView.findViewById(R.id.tv_mileage);
+            holder.body = (TextView) convertView.findViewById(R.id.tv_body);
+            holder.equipment = (TextView) convertView.findViewById(R.id.tv_equipment);
+            holder.model = (TextView) convertView.findViewById(R.id.tv_model);
+            holder.site = (TextView) convertView.findViewById(R.id.tv_site);
+            holder.responsible = (TextView) convertView.findViewById(R.id.tv_responsible);
+//            holder.vehicleImage = (ImageView) convertView.findViewById(R.id.tvPurpose);
+//            holder.isAvalible = (TextView) convertView.findViewById(R.id.tvIsAvalible);
+            holder.vehicleImageLink = (TextView) convertView.findViewById(R.id.tv_vehicleImageLink);
 
             convertView.setTag(holder);
-
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        //   holder.tvId.setText("Id" + vehicleList.get(position).getId());
-        //  holder.vehicleId.setText(vehicleList.get(position).getVehicleId());
-        //  holder.reg.setText(vehicleList.get(position).getReg());
-        //  holder.year.setText(vehicleList.get(position).getYear());
-        // holder.mileage.setText(vehicleList.get(position).getMileage());
-        // holder.body.setText(vehicleList.get(position).getBody());
-        //  holder.equipment.setText(vehicleList.get(position).getEquipment());
+        holder.vehicleId.setText(vehicleList.get(position).getVehicleId());
+        holder.reg.setText(vehicleList.get(position).getReg());
+        holder.year.setText(vehicleList.get(position).getYear());
+        holder.mileage.setText(vehicleList.get(position).getMileage());
+        holder.body.setText(vehicleList.get(position).getBody());
+        holder.equipment.setText(vehicleList.get(position).getEquipment());
         holder.model.setText(vehicleList.get(position).getModel());
         holder.site.setText(vehicleList.get(position).getSite());
-        // holder.responsible.setText(vehicleList.get(position).getResponsible());
-        // holder.vehicleImage.setimage(vehicleList.get(position).getVehicleImage());
-        // holder.vehicleImageLink.setText(vehicleList.get(position).getVehicleImageLink());
+        holder.responsible.setText(vehicleList.get(position).getResponsible());
+//        holder.vehicleImage.setimage(vehicleList.get(position).getVehicleImage());
+//        holder.isAvalible = (TextView) convertView.findViewById(R.id.tvIsAvalible);
+        holder.vehicleImageLink.setText(vehicleList.get(position).getVehicleImageLink());
         return convertView;
-
     }
 
     class ViewHolder {

@@ -71,7 +71,6 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
                 Log.i("JSONTaskBooking", "FinalJson is now: " + finalJson);
 
                 JSONObject parentObject = new JSONObject(finalJson);
-// TODO: 2017-10-11  Fixa så att Vehicle syns i Result i tagg 
                 try
                     {
                     List<Booking> list;
@@ -89,14 +88,7 @@ public class JSONTaskBooking extends AsyncTask<String, String, List<Booking>>
 
                     }
 
-
-                } catch (MalformedURLException e)
-                {
-                e.printStackTrace();
-                } catch (IOException e)
-                {
-                e.printStackTrace();
-                } catch (JSONException e)
+                } catch (JSONException | IOException e)
                 {
                 e.printStackTrace();
                 } finally

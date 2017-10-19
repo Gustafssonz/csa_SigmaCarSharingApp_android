@@ -32,9 +32,12 @@ import sigma.scsapp.utility.AsyncResponseBooking;
 import sigma.scsapp.utility.AsyncResponseVehicle;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
+import static sigma.scsapp.utility.URL.URL_TO_HIT;
+import static sigma.scsapp.utility.URL.getActiveBookings;
+import static sigma.scsapp.utility.URL.getActiveVehicles;
+
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AsyncResponseVehicle, AsyncResponseBooking {
-    private final String URL_TO_HIT = "http://10.0.2.2:8000/";
     User user = new User();
     JSONTaskVehicle mJsonTaskVehicle = new JSONTaskVehicle();
     JSONTaskBooking mJsonTaskBooking = new JSONTaskBooking();
@@ -45,15 +48,6 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String userId = "2"; //user.getId();
-        String bookingId = null; //
-        String activeBookingsForUser = "users/" + userId + "/bookings/";
-        String specifikBookingForUser = "users/" + userId + "/bookings/" + bookingId;
-        String getAllVehicle = "servertestvehicle.json";
-        String getUser = "serveruser.json";
-        String getAllBookings = "servertest.json";
-        String getCurrentBookings = "booking2.json";
-        String getCurrentVehicles = "vehicle2.json";
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_drawer);
@@ -61,10 +55,10 @@ public class UserProfileActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mJsonTaskVehicle.delegate = this;
-        mJsonTaskVehicle.execute(URL_TO_HIT + getCurrentVehicles);
+        mJsonTaskVehicle.execute(URL_TO_HIT + getActiveVehicles);
 
         mJsonTaskBooking.delegate = this;
-        mJsonTaskBooking.execute(URL_TO_HIT + getCurrentBookings);
+        mJsonTaskBooking.execute(URL_TO_HIT + getActiveBookings);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);

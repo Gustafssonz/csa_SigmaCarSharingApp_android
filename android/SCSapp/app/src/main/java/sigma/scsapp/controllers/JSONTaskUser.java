@@ -93,13 +93,8 @@ public class JSONTaskUser extends AsyncTask<String, String, List<User>>
                 return userList;
 
 
-                } catch (MalformedURLException e)
-                {
-                e.printStackTrace();
-                } catch (IOException e)
-                {
-                e.printStackTrace();
-                } catch (JSONException e)
+
+                } catch (JSONException | IOException e)
                 {
                 e.printStackTrace();
                 } finally

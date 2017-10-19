@@ -59,9 +59,11 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .build();
+
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
                 .defaultDisplayImageOptions(defaultOptions)
                 .build();
+
         ImageLoader.getInstance().init(config); // Do it on Application start
 
         lvBookings = (ListView) findViewById(R.id.LV_list);
