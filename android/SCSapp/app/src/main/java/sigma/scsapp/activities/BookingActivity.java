@@ -30,6 +30,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import static sigma.scsapp.utility.URL.URL_TO_HIT;
 import static sigma.scsapp.utility.URL.getActiveVehicles;
 
@@ -42,12 +44,16 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle {
     HashMap<String, List<String>> listDataChild;
     private String site;
 
-    // Date Time Data
+    /*
+         Date Time Data
+    */
     TextView tv_resultStartDateTime;
     TextView tv_resultEndDateTime;
 
 
-    // Booking info data
+    /*
+         Booking info data
+    */
     EditText et_errand;
     EditText et_purpose;
     EditText et_destination;
@@ -59,8 +65,19 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle {
     private String resultStartDataTime;
     private String resultEndDateTime;
 
+    /*
+        Vehicle data and picker
+    */
     private List<Vehicle> vehicles;
     JSONTaskVehicle mJsonTaskVehicle = new JSONTaskVehicle();
+    ListView lv_listOfAvalibleVehicles;
+    private Vehicle pickedVehicle;
+
+    /*
+        Gson handling
+    */
+    Gson gson;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,16 +107,16 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle {
         tv_resultStartDateTime = findViewById(R.id.tv_resultStartDateTime);
         tv_resultEndDateTime = findViewById(R.id.tv_resultEndDateTime);
 
-        if (tv_resultStartDateTime.is && tv_resultEndDateTime ){
-
+        if ((resultStartDataTime.toString().isEmpty()) && resultEndDateTime.toString().isEmpty()) {
+            findAvalibleVehicles();
+            // TODO: 2017-10-19 Fill the active list
+            // TODO: 2017-10-19 Show JSON in a list
+            // TODO: 2017-10-19 Pick car
         }
         /*
         *  Get Vehicle and pick
         */
-        // TODO: 2017-10-19 Send request for avaliable vehicles
 
-        // TODO: 2017-10-19 Show JSON in a list
-        // TODO: 2017-10-19 Pick car
 
         btn_bookingInfo_completed = (Button) findViewById(R.id.btn_bookingInfo_accepted);
         btn_bookingInfo_completed.setOnClickListener(new View.OnClickListener() {
@@ -158,24 +175,20 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle {
             this.vehicles = output;
             this.updateListView();
         } else {
-            Toast.makeText(BookingActivity.this, "Not able to fetch vehicle data from server.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BookingActivity.this, "Not able to fetch pickedVehicle data from server.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void updateListView() {
         if (this.vehicles != null) {
-            // the Adapter takes the Row-Layout, inserting the result into it.
             VehicleAdapter adapter = new VehicleAdapter(this, this, R.layout.list_row_vehicle, vehicles);
-            // the ListView (lvBooking) takes the adapter, in this case the Row (with the result) and add it into the ListView.
             ListView lvVehicle = (ListView) findViewById(R.id.lv_listOfAvalibleVehicles);
             lvVehicle.setAdapter(adapter);
             lvVehicle.setOnItemClickListener(new AdapterView.OnItemClickListener() {  // list item click opens a new detailed activity
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Booking booking = bookings.get(position); // getting the model
-                    //intent.putExtra("bookingkey", new Gson().toJson(booking)); // converting model json into string type and sending it via intent
-                    // startActivity(intent);
-//                    Toast.makeText(UserProfileActivity.this, "You clicked on your active booking", Toast.LENGTH_SHORT).show();
+                    pickedVehicle = vehicles.get(position);
+                    Toast.makeText(BookingActivity.this, "You picked a car" + pickedVehicle.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -245,15 +258,20 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
-
-      /*  et_errand.setText(errandResult);
-        et_purpose.setText(purposeResult);
-        et_destination.setText(destinationResult); */
     }
 
     private void findAvalibleVehicles() {
         mJsonTaskVehicle.delegate = this;
         mJsonTaskVehicle.execute(URL_TO_HIT + getActiveVehicles);
+    }
+
+    public Vehicle returnPickedVehicle() {
+        return pickedVehicle;
+    }
+
+    public String gsonVehicle() {
+        String pickedVehicleToJson = gson.toJson(pickedVehicle);
+        Log.i("BookingActivity", "Json format:" + pickedVehicleToJson);
+        return pickedVehicleToJson;
     }
 }
