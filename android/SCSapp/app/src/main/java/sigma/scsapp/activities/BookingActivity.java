@@ -281,6 +281,7 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
         return smallList;
     }
 
+    // TODO: 2017-10-23 Change the Bookingout together with choosen Site
     @Override
     public void processFinishBooking(List<Booking> output) {
         if (output != null) {

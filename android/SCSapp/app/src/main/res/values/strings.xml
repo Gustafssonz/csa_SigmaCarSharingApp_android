@@ -2,8 +2,8 @@
     <string name="app_name">Sigma CarSharingApp</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_userId">User name</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_userId">User ID</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_userId">This user ID is invalid</string>
