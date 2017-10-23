@@ -56,8 +56,13 @@ public class BookingFormActivity
             @Override
             public void onClick(View v) {
                 Intent goBackToBooking = new Intent(BookingFormActivity.this, BookingActivity.class);
-                goBackToBooking.putExtra("ResultStart", "Start Date: " + startDay + "-" + startMonth + "-" + startDay + "\n" + "Start Time: " + startHour + ":" + startMinute);
-                goBackToBooking.putExtra("ResultEnd", "End Date: " + endDay + "-" + endMonth + "-" + endDay + "\n" + "End Time: " + endHour + ":" + endMinute);
+                goBackToBooking.putExtra("ResultStartDate", startDay + "-" + startMonth + "-" + startYear);
+                Log.i("BookingFormActivit", "Start date" + startDay + "-" + startMonth + "-" + startYear);
+                goBackToBooking.putExtra("ResultStartTime",+ startHour + ":" + startMinute);
+                Log.i("BookingFormActivit", "Start Time" + startHour + ":" + startMinute);
+                goBackToBooking.putExtra("ResultEndDate",endDay + "-" + endMonth + "-" + endYear);
+                goBackToBooking.putExtra("ResultEndTime", endHour + ":" + endMinute);
+                goBackToBooking.putExtra("ResultIsCompleted", true);
                 startActivity(goBackToBooking);
             }
         });
@@ -93,7 +98,7 @@ public class BookingFormActivity
 
     @Override
     public void onEndDateSet(int year, int month, int day) {
-        Log.i("Booking", "Setting end date: " + year + "," + month + " , " + day);
+        Log.i("Booking", "Setting end date: " + year + ":" + month + ":" + day);
         endYear = year;
         endMonth = month;
         endDay = day;
@@ -102,7 +107,7 @@ public class BookingFormActivity
 
     @Override
     public void onStartDateSet(int year, int month, int day) {
-        Log.i("Booking", "Setting start date: " + year + ":" + month + " " + day);
+        Log.i("Booking", "Setting start date: " + year + ":" + month + ":" + day);
         startYear = year;
         startMonth = month;
         startDay = day;
