@@ -50,7 +50,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
 
-
         </activity>
 
         <!-- AdminActivity, showing of amin-stuff -->
