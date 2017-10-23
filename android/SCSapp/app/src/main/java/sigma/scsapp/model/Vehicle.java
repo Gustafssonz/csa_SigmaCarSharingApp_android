@@ -3,6 +3,8 @@ package sigma.scsapp.model;
 
 import android.widget.ImageView;
 
+import java.util.List;
+
 /**
  * Created by Niklas on 2017-09-14.
  */
@@ -21,6 +23,11 @@ public class Vehicle {
     //private ImageView vehicleImage;
     //private boolean isAvalible;
     private String vehicleImageLink;
+    
+    //private List<Booking> activeBookings;
+
+    // TODO: 2017-10-20 hämta hem alla aktiva bookings för akuell vech?
+    // TODO: 2017-10-20 Returna alla bookings för specifikt vechId.
 
 
     public Vehicle(String vehicleId, String reg, String year, String mileage, String body, String equipment, String model, String fuel, String site, String responsible, String vehicleImageLink)

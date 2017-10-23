@@ -31,9 +31,11 @@ import sigma.scsapp.model.Vehicle;
 import sigma.scsapp.utility.AsyncResponseBooking;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
+import static sigma.scsapp.utility.URL.URL_TO_HIT;
+import static sigma.scsapp.utility.URL.getAllBookings;
+
 public class LogActivity extends AppCompatActivity implements AsyncResponseBooking //implements BottomNavigationView.OnNavigationItemSelectedListener
 {
-    private final String URL_TO_HIT = "http://10.0.2.2:8000/servertest.json";
     private TextView tvData;
     private ListView lvBookings;
     private ProgressDialog dialog;
@@ -71,7 +73,7 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
 
         // To start fetching the data when app start, uncomment below line to start the async task.
         jsonTaskBooking.delegate = this;
-        jsonTaskBooking.execute(URL_TO_HIT);
+        jsonTaskBooking.execute(URL_TO_HIT + getAllBookings);
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
