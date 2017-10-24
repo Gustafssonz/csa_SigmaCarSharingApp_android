@@ -1,6 +1,7 @@
 package sigma.scsapp.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,11 +18,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import sigma.scsapp.R;
 import sigma.scsapp.adapters.BookingAdapter;
 import sigma.scsapp.controllers.JSONTaskBooking;
@@ -33,6 +42,7 @@ import sigma.scsapp.utility.AsyncResponseBooking;
 import sigma.scsapp.utility.AsyncResponseVehicle;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
+import static sigma.scsapp.R.id.progressBar;
 import static sigma.scsapp.utility.URL.URL_TO_HIT;
 import static sigma.scsapp.utility.URL.getActiveBookings;
 import static sigma.scsapp.utility.URL.getActiveVehicles;
@@ -46,19 +56,65 @@ public class UserProfileActivity extends AppCompatActivity
 
     private List<Booking> bookings;
     private List<Vehicle> vehicles;
-    ImageView myPicture;
+    CircleImageView myPicture;
     TextView myName;
     TextView myEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_main);
 
-        myPicture = (ImageView) findViewById(R.id.imageView);
+
+        // image adapter
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions)
+                .build();
+        ImageLoader.getInstance().init(config); // Do it on Application start
+
+        myPicture = (CircleImageView) findViewById(R.id.iv_myPicture);
         myName = (TextView) findViewById(R.id.tv_myName);
         myEmail = (TextView) findViewById(R.id.tv_myEmail);
+
+        // TODO: 2017-10-24 Namn ovanför bilden. göra bilden rund. Total bookings, total distance for the year. lägga till totalt längd och privata rundor kvar.
+
+
+        // myPicture.setImageDrawable();
+        /*myName.setText();
+        myEmail.setText();
+        */
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbh_progress_bar);
+
+        ImageLoader.getInstance().displayImage("http://10.0.2.2:8000/IMG_2663.jpg", myPicture, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                myPicture.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                progressBar.setVisibility(View.GONE);
+                myPicture.setVisibility(View.INVISIBLE);
+                Log.e("UserProfileActivity", " Failed to load profile picture");
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                progressBar.setVisibility(View.GONE);
+                myPicture.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+                progressBar.setVisibility(View.GONE);
+                myPicture.setVisibility(View.INVISIBLE);
+            }
+        });
 
 
 
@@ -160,30 +216,6 @@ public class UserProfileActivity extends AppCompatActivity
             }
         });
     }
-
-   /* THIS ADDS A SETTING BUTTON IN TOP RIGHT
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.user_profile, menu);
-        return true;
-    }*/
-
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
     private void updateListView() {
         if (this.vehicles != null && this.bookings != null) {
             // the Adapter takes the Row-Layout, inserting the result into it.

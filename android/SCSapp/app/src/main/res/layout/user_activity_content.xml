@@ -21,19 +21,77 @@
             tools:layout_editor_absoluteY="50dp"
             tools:layout_editor_absoluteX="0dp">
 
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_profile_info"
+                android:layout_width="368dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ProgressBar
+                    android:id="@+id/pbh_progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="59dp"
+                    android:layout_height="22dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_myPicture"
+                    app:layout_constraintLeft_toLeftOf="@+id/iv_myPicture"
+                    app:layout_constraintRight_toRightOf="@+id/iv_myPicture"
+                    app:layout_constraintTop_toTopOf="@+id/iv_myPicture"
+                    app:layout_constraintVertical_bias="0.547"/>
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_myPicture"
+                    android:layout_width="100dp"
+                    android:layout_height="90dp"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/sigmaColorCyan"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="29dp"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <TextView
+                    android:id="@+id/text_profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="21dp"
+                    android:background="@android:color/transparent"
+                    android:ems="8"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Niklas Gustafsson"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_myPicture"/>
+            </android.support.constraint.ConstraintLayout>
+
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tv_activeReservation"
                 android:layout_width="191dp"
                 android:layout_height="30dp"
                 android:text="Active Reservations"
                 android:textAlignment="center"
                 android:textAppearance="@android:style/TextAppearance"
                 android:textSize="18sp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="247dp"
-                android:layout_marginLeft="97dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginStart="97dp"/>
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="368dp"
@@ -46,7 +104,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/constraintLayout">
 
                 <ListView
                     android:id="@+id/lv_listOfActiveBookings"
@@ -67,34 +126,6 @@
 
             </android.support.constraint.ConstraintLayout>
 
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="98dp"
-                android:layout_height="80dp"
-                android:scaleType="center"
-                app:srcCompat="@mipmap/ic_launcher"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="143dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginStart="143dp"/>
-
-            <TextView
-                android:id="@+id/text_profile_name"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:cursorVisible="false"
-                android:ems="8"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Niklas Gustafsson"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3"
-                android:layout_marginLeft="106dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginStart="106dp"/>
 
         </android.support.constraint.ConstraintLayout>
 
