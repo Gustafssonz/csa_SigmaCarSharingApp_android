@@ -69,15 +69,16 @@ public class VehicleTabbedViewActivity extends AppCompatActivity
             }
 
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu)
-            {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_vehicle_tabbed_view, menu);
-            return true;
-            }
+       /* THIS ADDS A SETTING BUTTON IN TOP RIGHT
+       mightc change the user_profle
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.user_profile, menu);
+        return true;
+    }*/
 
-        @Override
+       /* @Override
         public boolean onOptionsItemSelected(MenuItem item)
             {
             // Handle action bar item clicks here. The action bar will
@@ -92,7 +93,7 @@ public class VehicleTabbedViewActivity extends AppCompatActivity
                 }
 
             return super.onOptionsItemSelected(item);
-            }
+            }*/
 
         /**
          * A placeholder fragment containing a simple view.

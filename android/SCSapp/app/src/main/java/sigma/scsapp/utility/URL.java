@@ -15,5 +15,5 @@ public class URL {
     public final static String getUser = "ActiveUser.json";
     public final static String getAllBookings = "PastBookings.json";
     public final static String getActiveBookings = "ActiveBookings.json";
-    public final static String getActiveVehicles = "ActiveVehicles.json";
+    public final static String getActiveVehicles = "Vehicles.json";
 }

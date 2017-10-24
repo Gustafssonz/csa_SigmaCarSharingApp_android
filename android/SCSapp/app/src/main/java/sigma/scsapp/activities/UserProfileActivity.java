@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,14 +46,22 @@ public class UserProfileActivity extends AppCompatActivity
 
     private List<Booking> bookings;
     private List<Vehicle> vehicles;
+    ImageView myPicture;
+    TextView myName;
+    TextView myEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.user_activity_main);
+
+        myPicture = (ImageView) findViewById(R.id.imageView);
+        myName = (TextView) findViewById(R.id.tv_myName);
+        myEmail = (TextView) findViewById(R.id.tv_myEmail);
+
+
+
 
         mJsonTaskVehicle.delegate = this;
         mJsonTaskVehicle.execute(URL_TO_HIT + getActiveVehicles);
@@ -60,6 +69,66 @@ public class UserProfileActivity extends AppCompatActivity
         mJsonTaskBooking.delegate = this;
         mJsonTaskBooking.execute(URL_TO_HIT + getActiveBookings);
 
+        // SET UP PROFILE
+        String newString;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                newString = null;
+            } else {
+                Log.i("test", "Setting up profile");
+                TextView profile_userId = (TextView) findViewById(R.id.text_profile_name);
+                profile_userId.setText(getIntent().getStringExtra("userName"));
+                // TextView profile_userName = (TextView)findViewById(R.id.text_profile_name);
+                //profile_userName.setText(getIntent().getStringExtra("profileUserName"));
+
+                // TextView profile_userPhone = (TextView)findViewById(R.id.text_profile_phone);
+
+                // Check database for profile-picture
+
+                // query for databasecheck for picture
+                String imageURL = "http://www.seosmarty.com/wp-content/uploads/2011/08/profile-picture.jpg";
+
+
+                // BUTTONS
+
+            }
+        } else {
+            newString = (String) savedInstanceState.getSerializable("extra_email");
+        }
+
+        addToolBarWithDrawerFunction();
+        addBottomBar();
+        addNavigationbar();
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+    public void addToolBarWithDrawerFunction() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Log.i("Tag", "You pressed the naviagion drawer --------------");
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+    public void addNavigationbar() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+    public void addBottomBar() {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         Menu menu = bottomNavigationView.getMenu();
@@ -90,68 +159,17 @@ public class UserProfileActivity extends AppCompatActivity
                 return false;
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        Log.i("Tag", "You pressed the naviagion drawer --------------");
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        // SET UP PROFILE
-        String newString;
-
-        // TODO Generate content based on Database
-        if (savedInstanceState == null) {
-
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                newString = null;
-            } else {
-
-                Log.i("test", "Setting up profile");
-                TextView profile_userId = (TextView) findViewById(R.id.text_profile_name);
-                profile_userId.setText(getIntent().getStringExtra("userName"));
-
-                // TextView profile_userName = (TextView)findViewById(R.id.text_profile_name);
-                //profile_userName.setText(getIntent().getStringExtra("profileUserName"));
-
-                // TextView profile_userPhone = (TextView)findViewById(R.id.text_profile_phone);
-
-                // Check database for profile-picture
-
-                // query for databasecheck for picture
-                String imageURL = "http://www.seosmarty.com/wp-content/uploads/2011/08/profile-picture.jpg";
-
-
-                // BUTTONS
-
-            }
-        } else {
-            newString = (String) savedInstanceState.getSerializable("extra_email");
-        }
-
     }
 
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
+   /* THIS ADDS A SETTING BUTTON IN TOP RIGHT
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.user_profile, menu);
         return true;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -165,8 +183,7 @@ public class UserProfileActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
+    }*/
     private void updateListView() {
         if (this.vehicles != null && this.bookings != null) {
             // the Adapter takes the Row-Layout, inserting the result into it.
@@ -195,7 +212,6 @@ public class UserProfileActivity extends AppCompatActivity
             Toast.makeText(UserProfileActivity.this, "Not able to fetch vehicle data from server.", Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
     public void processFinishBooking(final List<Booking> output) {
         if (output != null) {
@@ -205,7 +221,6 @@ public class UserProfileActivity extends AppCompatActivity
             Toast.makeText(UserProfileActivity.this, "Not able to fetch booking data from server.", Toast.LENGTH_SHORT).show();
         }
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -213,14 +228,11 @@ public class UserProfileActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // TODO Add camera posiblities, read: http://www.codepool.biz/take-a-photo-from-android-camera-and-upload-it-to-a-remote-php-server.html for example
 
             // Handle the camera action
         } else if (id == R.id.nav_manage) {
             // go back to profile-view
             startActivity(new Intent(UserProfileActivity.this, AdminActivity.class));
-
-
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.toolbar) {

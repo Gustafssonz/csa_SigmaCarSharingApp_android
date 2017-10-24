@@ -78,16 +78,16 @@ public class ActiveBookingsActivity extends AppCompatActivity implements AsyncRe
         myJsonTask.execute(URL_TO_HIT + getActiveBookingBooking);
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i("OnCreateOption", "Clickable menu");
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_confirm_booking, menu);
         return true;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
@@ -97,7 +97,7 @@ public class ActiveBookingsActivity extends AppCompatActivity implements AsyncRe
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
     @Override
