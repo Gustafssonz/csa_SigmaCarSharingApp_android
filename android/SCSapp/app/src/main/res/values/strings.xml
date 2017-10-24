@@ -39,11 +39,14 @@
 
     <!-- UserProfileActivity strings -->
     <string name="action_settings">Settings</string>
-    <string name="title_activity_user">User View</string>
+    <string name="title_activity_user">USER PROFILE</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_admin">Admin View</string>
+
+    <string name="title_activity_log">BOOKING LOG</string>
+    <string name="title_activity_booking">VEHICLES POOL</string>
 
 
     <!-- Strings related to Settings -->
@@ -105,7 +108,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_vehicle_tabbed_view">VehicleTabbedViewActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_booking_form_input">BookingFormInputActivity</string>
+    <string name="title_activity_booking_date_time">Choose time and date</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

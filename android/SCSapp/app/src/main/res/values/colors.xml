@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryDark">#2FC2BA</color>
-    <color name="sigmaColorCyan">#2FC2BA</color>
-    <color name="white">#ffffffff</color>
-    <color name="black">#ff000000</color>
+    <color name="sigmaColorCyan">#64cbca</color>
+    <color name="sigmaColorDarkerCyan">#0097a7</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="sigmaColorRed">#e53935</color>
 
     <!-- new colors, might change -->
     <color name="colorWhite">#fff</color>
