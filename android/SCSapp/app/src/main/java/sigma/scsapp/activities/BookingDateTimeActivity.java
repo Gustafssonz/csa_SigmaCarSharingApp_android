@@ -60,7 +60,7 @@ public class BookingDateTimeActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bookingdatetime_content);
+        setContentView(R.layout.bookingdatetime_main);
 
         btn_done_resultDateTime = (Button) findViewById(R.id.btn_ResultDateTime);
         btn_done_resultDateTime.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,10 @@ public class BookingDateTimeActivity
                 startActivity(goBackToBooking);
             }
         });
+
+        addBottomBar();
+        addToolBarWithDrawerFunction();
+        addNavigationbar();
     }
 
     // TIME START AND END

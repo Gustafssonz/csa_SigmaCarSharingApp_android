@@ -270,7 +270,7 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
 
 //                for (int z = 0; currentVehicleId.equals(); z++) {
                 // TODO: 2017-10-22 Checka av ifall tiden infaller på vald tid. Tag då bort positionens vechileId och remova den från listan med avalibleVehicles.
-                if (myStartDate.before(dateDateEnd) || myEndDate.after(dateDateStart)) {
+               if (myStartDate.before(dateDateEnd) || myEndDate.after(dateDateStart)) {
                     // if (myStartTime.before(dateTimeEnd) || myEndTime.after(dateTimeStart)
                     Log.i("BookingActivity", "CurrentId is now : " + currentId);
                     if (availableListOfVehicle.get(i).getVehicleId().equals(currentBooking.getVehicleId()))
@@ -289,6 +289,9 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
             Toast.makeText(BookingActivity.this, "Not able to fetch pickedVehicle data from server.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
     private void updateListView() {
         if (this.availableVehicles != null) {
             showTimeButton();
