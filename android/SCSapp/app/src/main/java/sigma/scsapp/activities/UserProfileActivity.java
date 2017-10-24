@@ -1,6 +1,7 @@
 package sigma.scsapp.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,9 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -53,9 +62,56 @@ public class UserProfileActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_main);
 
-        myPicture = (CircleImageView) findViewById(R.id.imageView);
+
+        // image adapter
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions)
+                .build();
+        ImageLoader.getInstance().init(config); // Do it on Application start
+
+        myPicture = (CircleImageView) findViewById(R.id.iv_myPicture);
         myName = (TextView) findViewById(R.id.tv_myName);
         myEmail = (TextView) findViewById(R.id.tv_myEmail);
+
+        // TODO: 2017-10-24 Namn ovanför bilden. göra bilden rund. Total bookings, total distance for the year. lägga till totalt längd och privata rundor kvar.
+
+
+        // myPicture.setImageDrawable();
+        /*myName.setText();
+        myEmail.setText();
+        */
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbh_progress_bar);
+
+        ImageLoader.getInstance().displayImage("http://10.0.2.2:8000/IMG_2663.jpg", myPicture, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                myPicture.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                progressBar.setVisibility(View.GONE);
+                myPicture.setVisibility(View.INVISIBLE);
+                Log.e("UserProfileActivity", " Failed to load profile picture");
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                progressBar.setVisibility(View.GONE);
+                myPicture.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+                progressBar.setVisibility(View.GONE);
+                myPicture.setVisibility(View.INVISIBLE);
+            }
+        });
 
 
 
@@ -68,19 +124,14 @@ public class UserProfileActivity extends AppCompatActivity
 
         // SET UP PROFILE
         String newString;
-
-        // TODO Generate content based on Database
         if (savedInstanceState == null) {
-
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
                 newString = null;
             } else {
-
                 Log.i("test", "Setting up profile");
                 TextView profile_userId = (TextView) findViewById(R.id.text_profile_name);
                 profile_userId.setText(getIntent().getStringExtra("userName"));
-
                 // TextView profile_userName = (TextView)findViewById(R.id.text_profile_name);
                 //profile_userName.setText(getIntent().getStringExtra("profileUserName"));
 
