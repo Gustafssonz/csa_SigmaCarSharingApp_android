@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".activities.HttpActivity">
+
+    <EditText android:id="@+id/userInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/btnGetApi"
+        android:text="GET HTTP API"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/tvShowApi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/serverDataReceived"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""/>
+
+    <TextView android:id="@+id/rawJsonData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To receive JSON data from Server click the above button"/>
+
+    <TextView android:id="@+id/parsedJsonData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Following is the parsed JSON Data"/>
+
+    <TextView android:id="@+id/showParsedJson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

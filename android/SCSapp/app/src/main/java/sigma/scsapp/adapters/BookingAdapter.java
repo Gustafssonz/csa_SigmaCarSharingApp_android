@@ -31,7 +31,7 @@ public class BookingAdapter extends ArrayAdapter {
         super(context, resource, bookings);
         bookingList = bookings;
         vehicleList = vehicles;
-        Log.i("BookingAdapter", "bookingList got info: " + bookingList);
+        Log.i("BookingAdapter", "bookingListFromJson got info: " + bookingList);
         this.resource = resource;
         inflater = (LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE);
     }

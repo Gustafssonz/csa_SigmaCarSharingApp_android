@@ -32,7 +32,7 @@ import sigma.scsapp.utility.AsyncResponseBooking;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
 import static sigma.scsapp.utility.URL.URL_TO_HIT;
-import static sigma.scsapp.utility.URL.getAllBookings;
+//import static sigma.scsapp.utility.URL.getAllBookings;
 
 public class LogActivity extends AppCompatActivity implements AsyncResponseBooking //implements BottomNavigationView.OnNavigationItemSelectedListener
 {
@@ -41,9 +41,6 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
     private ProgressDialog dialog;
     TimePickerFragment timepickerfrag;
     JSONTaskBooking jsonTaskBooking = new JSONTaskBooking();
-
-
-    // Git error fix - http://stackoverflow.com/questions/16614410/android-studio-checkout-github-error-createprocess-2-windows
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +70,7 @@ public class LogActivity extends AppCompatActivity implements AsyncResponseBooki
 
         // To start fetching the data when app start, uncomment below line to start the async task.
         jsonTaskBooking.delegate = this;
-        jsonTaskBooking.execute(URL_TO_HIT + getAllBookings);
+        jsonTaskBooking.execute("http://localhost:8080/api/csa/bookings");
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);

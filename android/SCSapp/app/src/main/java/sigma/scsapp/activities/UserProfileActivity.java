@@ -33,8 +33,8 @@ import sigma.scsapp.utility.AsyncResponseVehicle;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
 import static sigma.scsapp.utility.URL.URL_TO_HIT;
-import static sigma.scsapp.utility.URL.getActiveBookings;
-import static sigma.scsapp.utility.URL.getActiveVehicles;
+//import static sigma.scsapp.utility.URL.getActiveBookings;
+//import static sigma.scsapp.utility.URL.getActiveVehicles;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AsyncResponseVehicle, AsyncResponseBooking {
@@ -55,10 +55,10 @@ public class UserProfileActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mJsonTaskVehicle.delegate = this;
-        mJsonTaskVehicle.execute(URL_TO_HIT + getActiveVehicles);
+        mJsonTaskVehicle.execute("http://localhost:8080/api/csa/vehicles");
 
         mJsonTaskBooking.delegate = this;
-        mJsonTaskBooking.execute(URL_TO_HIT + getActiveBookings);
+        mJsonTaskBooking.execute("http://localhost:8080/api/csa/bookings");
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);

@@ -26,21 +26,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:networkSecurityConfig="@xml/network_security_config">
 
         <!-- LoginActivity, can't do anything without it -->
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
-
         </activity>
         <activity android:name=".activities.ActiveBookingsActivity">
         </activity>
@@ -49,7 +46,6 @@
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
-
         </activity>
 
         <!-- AdminActivity, showing of amin-stuff -->
@@ -61,28 +57,12 @@
             android:name=".activities.BookingActivity"
             android:label="Booking View"
             android:windowSoftInputMode="adjustPan">
-
-
-
-
         </activity>
         <activity android:name=".activities.LogActivity">
         </activity>
-        <!--
-        <activity
-            android:name=".dbhelpers.Parser_Vehicle"
-            android:label="@string/title_parser_vehicle"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".dbhelpers.Parser_User"
-            android:label="@string/title_parser_user"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        -->
         <activity android:name=".activities.BookingFormActivity">
         </activity>
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.HttpActivity">
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -95,7 +75,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
-
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps">
@@ -110,7 +89,6 @@
         <activity
             android:name=".activities.BookingFormInputActivity"
             android:label="@string/title_activity_booking_form_input">
-
         </activity>
 
         <activity android:name=".activities.CameraActivity"></activity>

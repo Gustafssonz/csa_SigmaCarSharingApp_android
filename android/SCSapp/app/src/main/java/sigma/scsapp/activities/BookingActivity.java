@@ -41,8 +41,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import static sigma.scsapp.utility.URL.URL_TO_HIT;
-import static sigma.scsapp.utility.URL.getAllBookings;
-import static sigma.scsapp.utility.URL.getAllVehicle;
+//import static sigma.scsapp.utility.URL.getAllBookings;
+//import static sigma.scsapp.utility.URL.getAllVehicle;
 
 
 public class BookingActivity extends Activity implements AsyncResponseVehicle, AsyncResponseBooking {
@@ -423,12 +423,12 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
 
     private void findAllBookings() {
         mJsonTaskBooking.delegate = this;
-        mJsonTaskBooking.execute(URL_TO_HIT + getAllBookings);
+        mJsonTaskBooking.execute("http://localhost:8080/api/csa/bookigs");
     }
 
     private void findAvalibleVehicles() {
         mJsonTaskVehicle.delegate = this;
-        mJsonTaskVehicle.execute(URL_TO_HIT + getAllVehicle);
+        mJsonTaskVehicle.execute("http://localhost:8080/api/csa/vehicles");
     }
 
     public List<Vehicle> returnAvailableListOfVehicle() {
