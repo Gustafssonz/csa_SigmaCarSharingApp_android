@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import sigma.scsapp.R;
 import sigma.scsapp.adapters.BookingAdapter;
 import sigma.scsapp.controllers.JSONTaskBooking;
@@ -32,9 +33,6 @@ import sigma.scsapp.utility.AsyncResponseBooking;
 import sigma.scsapp.utility.AsyncResponseVehicle;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
-import static sigma.scsapp.utility.URL.URL_TO_HIT;
-//import static sigma.scsapp.utility.URL.getActiveBookings;
-//import static sigma.scsapp.utility.URL.getActiveVehicles;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AsyncResponseVehicle, AsyncResponseBooking {
@@ -45,58 +43,28 @@ public class UserProfileActivity extends AppCompatActivity
 
     private List<Booking> bookings;
     private List<Vehicle> vehicles;
+    CircleImageView myPicture;
+    TextView myName;
+    TextView myEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.user_activity_main);
+
+        myPicture = (CircleImageView) findViewById(R.id.imageView);
+        myName = (TextView) findViewById(R.id.tv_myName);
+        myEmail = (TextView) findViewById(R.id.tv_myEmail);
+
+
+
 
         mJsonTaskVehicle.delegate = this;
         mJsonTaskVehicle.execute("http://localhost:8080/api/csa/vehicles");
 
         mJsonTaskBooking.delegate = this;
         mJsonTaskBooking.execute("http://localhost:8080/api/csa/bookings");
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-
-                    case R.id.ic_books:
-                        Intent bookingIntent = new Intent(UserProfileActivity.this, BookingActivity.class);
-                        startActivity(bookingIntent);
-                        break;
-
-                    case R.id.ic_center_focus:
-                        // Intent intent3 = new Intent(UserProfileActivity.this, LogActivity.class);
-                        // startActivity(intent3);
-                        break;
-
-                    case R.id.ic_backup:
-                        Intent userProfileIntent = new Intent(UserProfileActivity.this, LogActivity.class);
-                        startActivity(userProfileIntent);
-                        break;
-                }
-                return false;
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        Log.i("Tag", "You pressed the naviagion drawer --------------");
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
         // SET UP PROFILE
         String newString;
@@ -131,6 +99,10 @@ public class UserProfileActivity extends AppCompatActivity
             newString = (String) savedInstanceState.getSerializable("extra_email");
         }
 
+        addToolBarWithDrawerFunction();
+        addBottomBar();
+        addNavigationbar();
+
     }
 
 
@@ -143,29 +115,54 @@ public class UserProfileActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+    public void addToolBarWithDrawerFunction() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.user_profile, menu);
-        return true;
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Log.i("Tag", "You pressed the naviagion drawer --------------");
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+    public void addNavigationbar() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+    public void addBottomBar() {
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.ic_books:
+                        Intent bookingIntent = new Intent(UserProfileActivity.this, BookingActivity.class);
+                        startActivity(bookingIntent);
+                        break;
+
+                    case R.id.ic_center_focus:
+                        // Intent intent3 = new Intent(UserProfileActivity.this, LogActivity.class);
+                        // startActivity(intent3);
+                        break;
+
+                    case R.id.ic_backup:
+                        Intent userProfileIntent = new Intent(UserProfileActivity.this, LogActivity.class);
+                        startActivity(userProfileIntent);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private void updateListView() {
         if (this.vehicles != null && this.bookings != null) {

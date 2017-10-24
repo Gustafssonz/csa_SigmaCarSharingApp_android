@@ -19,7 +19,7 @@ public class BookingFormInputActivity extends AppCompatActivity
         EditText purpose;
         EditText destination;
 
-        private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+        /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener()
             {
 
@@ -41,7 +41,7 @@ public class BookingFormInputActivity extends AppCompatActivity
                     return false;
                     }
 
-            };
+            };*/
 
         @Override
         protected void onCreate(Bundle savedInstanceState)

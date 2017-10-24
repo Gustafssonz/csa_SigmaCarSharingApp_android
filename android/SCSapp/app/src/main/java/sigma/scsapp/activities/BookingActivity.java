@@ -1,6 +1,5 @@
 package sigma.scsapp.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,6 +25,12 @@ import sigma.scsapp.utility.BottomNavigationViewHelper;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +50,7 @@ import static sigma.scsapp.utility.URL.URL_TO_HIT;
 //import static sigma.scsapp.utility.URL.getAllVehicle;
 
 
-public class BookingActivity extends Activity implements AsyncResponseVehicle, AsyncResponseBooking {
+public class BookingActivity extends AppCompatActivity implements AsyncResponseVehicle, AsyncResponseBooking,NavigationView.OnNavigationItemSelectedListener {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -123,9 +128,9 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.booking_activityview);
+        setContentView(R.layout.booking_activity_main);
 
-        expListView = findViewById(R.id.exvListView);
+        expListView = (ExpandableListView) findViewById(R.id.exvListView);
         prepareListData();
 
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
@@ -138,13 +143,13 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
         /*
         *   Booking info
         */
-        et_errand = findViewById(R.id.et_errand);
-        et_purpose = findViewById(R.id.et_purpose);
-        et_destination = findViewById(R.id.et_destination);
+        et_errand = (EditText) findViewById(R.id.et_errand);
+        et_purpose = (EditText) findViewById(R.id.et_purpose);
+        et_destination = (EditText) findViewById(R.id.et_destination);
 
-        tv_errand = findViewById(R.id.tv_errand);
-        tv_purpose = findViewById(R.id.tv_purpose);
-        tv_destination = findViewById(R.id.tv_destination);
+        tv_errand = (TextView)findViewById(R.id.tv_errand);
+        tv_purpose = (TextView)findViewById(R.id.tv_purpose);
+        tv_destination = (TextView)findViewById(R.id.tv_destination);
 
         /*
         *  Date & Time
@@ -156,10 +161,10 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
         resultEndTime = fetchData.getStringExtra("ResultEndTime");
         boolean isCompleted = fetchData.getBooleanExtra("ResultIsCompleted", false);
 
-        tv_resultStartDate = findViewById(R.id.tv_resultStartDate);
-        tv_resultStartTime = findViewById(R.id.tv_resultStartTime);
-        tv_resultEndDate = findViewById(R.id.tv_resultEndDate);
-        tv_resultEndTime = findViewById(R.id.tv_resultEndTime);
+        tv_resultStartDate = (TextView)findViewById(R.id.tv_resultStartDate);
+        tv_resultStartTime = (TextView)findViewById(R.id.tv_resultStartTime);
+        tv_resultEndDate = (TextView)findViewById(R.id.tv_resultEndDate);
+        tv_resultEndTime = (TextView) findViewById(R.id.tv_resultEndTime);
 
         tv_resultStartDate.setText(resultStartDate);
         tv_resultStartTime.setText(resultStartTime);
@@ -181,68 +186,20 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
 
             findAvalibleVehicles();
             findAllBookings();
-
         }
 
 
-        btn_bookingInfo_completed = (Button) findViewById(R.id.btn_bookingInfo_accepted);
-        btn_bookingInfo_completed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resultErrand = (String) et_errand.getText().toString();
-                resultPurpose = (String) et_purpose.getText().toString();
-                resultDestination = (String) et_destination.getText().toString();
 
-                tv_errand.setText(resultErrand);
-                tv_purpose.setText(resultPurpose);
-                tv_destination.setText(resultDestination);
-
-
-                Log.i("BookingActivity", " info" + resultErrand + " -" + resultPurpose + " - " + resultDestination + "\n"
-                        + tv_resultStartDate + tv_resultEndDate);
-            }
-        });
         /*
         *  Get Vehicle and pick
         */
 
 
 
-
-
-            /*
-             * NAV MENU
-             */
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-
-                    case R.id.ic_books:
-                        // Current
-                        break;
-
-                    case R.id.ic_center_focus:
-                        Intent intent3 = new Intent(BookingActivity.this, MapsActivity.class);
-                        startActivity(intent3);
-                        break;
-
-                    case R.id.ic_backup:
-                        Intent intent4 = new Intent(BookingActivity.this, LogActivity.class);
-                        startActivity(intent4);
-                        break;
-                }
-
-
-                return false;
-            }
-        });
+        addDoneButton();
+        addNavigationbar();
+        addToolBarWithDrawerFunction();
+        addBottomBar();
     }
 
 
@@ -257,7 +214,6 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
             Toast.makeText(BookingActivity.this, "Not able to fetch pickedVehicle data from server.", Toast.LENGTH_SHORT).show();
         }
     }
-
     public List<Vehicle> returnAvailableVehiclesforSite(List<Vehicle> list) {
         smallList = new ArrayList<>();
         int x = list.size();
@@ -280,7 +236,10 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
         Log.i("BookingActivity", "Small list is now: " + smallList);
         return smallList;
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     @Override
     public void processFinishBooking(List<Booking> output) {
         if (output != null) {
@@ -330,8 +289,6 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
             Toast.makeText(BookingActivity.this, "Not able to fetch pickedVehicle data from server.", Toast.LENGTH_SHORT).show();
         }
     }
-
-
     private void updateListView() {
         if (this.availableVehicles != null) {
             showTimeButton();
@@ -347,19 +304,143 @@ public class BookingActivity extends Activity implements AsyncResponseVehicle, A
             });
         }
     }
-    
+    private void addDoneButton() {
+        btn_bookingInfo_completed = (Button) findViewById(R.id.btn_bookingInfo_accepted);
+        btn_bookingInfo_completed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultErrand = (String) et_errand.getText().toString();
+                resultPurpose = (String) et_purpose.getText().toString();
+                resultDestination = (String) et_destination.getText().toString();
+
+                tv_errand.setText(resultErrand);
+                tv_purpose.setText(resultPurpose);
+                tv_destination.setText(resultDestination);
+
+
+                Log.i("BookingActivity", " info" + resultErrand + " -" + resultPurpose + " - " + resultDestination + "\n"
+                        + tv_resultStartDate + tv_resultEndDate);
+            }
+        });
+    }
     private void showTimeButton(){
-        btn_pickTime = findViewById(R.id.btn_pickTime);
+        btn_pickTime = (Button)findViewById(R.id.btn_pickTime);
         btn_pickTime.setVisibility(View.VISIBLE);
         btn_pickTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startBooking = new Intent(BookingActivity.this, BookingFormActivity.class);
+                Intent startBooking = new Intent(BookingActivity.this, BookingDateTimeActivity.class);
                 startBooking.putExtra("site", postString);
                 startActivity(startBooking);
             }
         });
 
+    }
+    public void addToolBarWithDrawerFunction(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Log.i("Tag", "You pressed the naviagion drawer --------------");
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+    public void addNavigationbar () {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+    public void addBottomBar() {
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.ic_books:
+                        // Current
+                        break;
+
+                    case R.id.ic_center_focus:
+                        Intent intent3 = new Intent(BookingActivity.this, MapsActivity.class);
+                        startActivity(intent3);
+                        break;
+
+                    case R.id.ic_backup:
+                        Intent intent4 = new Intent(BookingActivity.this, LogActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    /* THIS ADDS A SETTING BUTTON IN TOP RIGHT
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.user_profile, menu);
+        return true;
+    }*/
+
+   /* @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }*/
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+
+            // Handle the camera action
+        } else if (id == R.id.nav_manage) {
+            // go back to profile-view
+            startActivity(new Intent(BookingActivity.this, AdminActivity.class));
+
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.toolbar) {
+            startActivity(new Intent(BookingActivity.this, UserProfileActivity.class));
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     /*

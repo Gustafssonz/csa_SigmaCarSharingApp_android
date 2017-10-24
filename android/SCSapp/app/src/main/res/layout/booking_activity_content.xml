@@ -335,22 +335,5 @@
                     </android.support.constraint.ConstraintLayout>
                 </RelativeLayout>
         </ScrollView>
-
-        <RelativeLayout
-            android:id="@+id/bottomBar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true">
-
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottomNavView_Bar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/white_grey_border_top"
-                app:menu="@menu/bottom_navigation_menu">
-
-
-            </android.support.design.widget.BottomNavigationView>
-        </RelativeLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -2,8 +2,17 @@ package sigma.scsapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,10 +24,11 @@ import sigma.scsapp.fragment.EndTimePickerFragment;
 import sigma.scsapp.fragment.StartDatePickerFragment;
 import sigma.scsapp.fragment.StartTimePickerFragment;
 import sigma.scsapp.fragment.TimePickerFragment;
+import sigma.scsapp.utility.BottomNavigationViewHelper;
 
-public class BookingFormActivity
-        extends FragmentActivity
-        implements StartTimePickerFragment.StartTimeListener, EndTimePickerFragment.EndTimeListener, StartDatePickerFragment.StartDateListener, EndDatePickerFragment.EndDateListener {
+public class BookingDateTimeActivity
+        extends AppCompatActivity
+        implements StartTimePickerFragment.StartTimeListener, EndTimePickerFragment.EndTimeListener, StartDatePickerFragment.StartDateListener, EndDatePickerFragment.EndDateListener, NavigationView.OnNavigationItemSelectedListener  {
 
     TimePickerFragment timePickerStart;
     TimePickerFragment timePickerEnd;
@@ -46,16 +56,17 @@ public class BookingFormActivity
     private String format = "";
     private TextView time;
 
+//   Could change this activity into Fragment instead
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.booking_timepicker);
+        setContentView(R.layout.bookingdatetime_content);
 
         btn_done_resultDateTime = (Button) findViewById(R.id.btn_ResultDateTime);
         btn_done_resultDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goBackToBooking = new Intent(BookingFormActivity.this, BookingActivity.class);
+                Intent goBackToBooking = new Intent(BookingDateTimeActivity.this, BookingActivity.class);
                 goBackToBooking.putExtra("ResultStartDate", startDay + "-" + startMonth + "-" + startYear);
                 Log.i("BookingFormActivit", "Start date" + startDay + "-" + startMonth + "-" + startYear);
                 goBackToBooking.putExtra("ResultStartTime",+ startHour + ":" + startMinute);
@@ -130,6 +141,89 @@ public class BookingFormActivity
         startHour = hour;
         startMinute = minutes;
         ((TextView) findViewById(R.id.tv_bookingform_set_time_start)).setText(startHour + " : " + startMinute);
+    }
+
+    public void addBottomBar() {
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.ic_books:
+                        Intent intent2 = new Intent(BookingDateTimeActivity.this, BookingActivity.class);
+                        startActivity(intent2);
+                        break;
+
+                    case R.id.ic_center_focus:
+                        Intent intent3 = new Intent(BookingDateTimeActivity.this, MapsActivity.class);
+                        startActivity(intent3);
+                        break;
+
+                    case R.id.ic_backup:
+
+
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+    public void addToolBarWithDrawerFunction(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Log.i("Tag", "You pressed the naviagion drawer --------------");
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+    public void addNavigationbar () {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+
+            // Handle the camera action
+        } else if (id == R.id.nav_manage) {
+            // go back to profile-view
+            startActivity(new Intent(BookingDateTimeActivity.this, AdminActivity.class));
+
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.toolbar) {
+            startActivity(new Intent(BookingDateTimeActivity.this, UserProfileActivity.class));
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
 
