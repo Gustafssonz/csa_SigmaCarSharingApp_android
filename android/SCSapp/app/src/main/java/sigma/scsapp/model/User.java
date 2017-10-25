@@ -7,11 +7,16 @@ package sigma.scsapp.model;
 public class User {
 
     // PROFILE
-    private String id;
+    private String userId;
     private String userName;
     private String isApproved;
     private String totalBookingsYear;
     private String totalDistanceYear;
+    private String userImage;
+    private String isWithinBookingTimeLimit;
+    private String isWithinBookingDistanceLimit;
+    private String isBookable;
+
 
     // Password Field
     // Using EditText with "inputtype=textpassword" makes it *****
@@ -20,9 +25,9 @@ public class User {
     public User() {
     }
 
-    public User(String id, String userName, String isApproved, String totalBookingsYear, String totalDistanceYear, String password)
+    public User(String userId, String userName, String isApproved, String totalBookingsYear, String totalDistanceYear, String password)
         {
-        this.id = id;
+        this.userId = userId;
         this.userName = userName;
         this.isApproved = isApproved;
         this.totalBookingsYear = totalBookingsYear;
@@ -30,9 +35,9 @@ public class User {
         this.password = password;
         }
 
-    public String getId()
+    public String getUserId()
         {
-        return id;
+        return userId;
         }
 
     public String getUserName()
@@ -84,7 +89,7 @@ public class User {
     public String toString()
         {
         return "User{" +
-                "id='" + id + '\'' +
+                "userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", isApproved='" + isApproved + '\'' +
                 ", totalBookingsYear='" + totalBookingsYear + '\'' +

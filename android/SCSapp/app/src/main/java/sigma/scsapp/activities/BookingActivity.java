@@ -1,5 +1,6 @@
 package sigma.scsapp.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -46,8 +47,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import static sigma.scsapp.utility.URL.URL_TO_HIT;
-import static sigma.scsapp.utility.URL.getAllBookings;
-import static sigma.scsapp.utility.URL.getAllVehicle;
+//import static sigma.scsapp.utility.URL.getAllBookings;
+//import static sigma.scsapp.utility.URL.getAllVehicle;
 
 
 public class BookingActivity extends AppCompatActivity implements AsyncResponseVehicle, AsyncResponseBooking,NavigationView.OnNavigationItemSelectedListener {
@@ -186,6 +187,7 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
 
             findAvalibleVehicles();
             findAllBookings();
+
         }
 
 
@@ -285,7 +287,6 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
             Toast.makeText(BookingActivity.this, "Not able to fetch pickedVehicle data from server.", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
     private void updateListView() {
@@ -503,12 +504,12 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
 
     private void findAllBookings() {
         mJsonTaskBooking.delegate = this;
-        mJsonTaskBooking.execute(URL_TO_HIT + getAllBookings);
+        mJsonTaskBooking.execute("http://localhost:8080/api/csa/bookigs");
     }
 
     private void findAvalibleVehicles() {
         mJsonTaskVehicle.delegate = this;
-        mJsonTaskVehicle.execute(URL_TO_HIT + getAllVehicle);
+        mJsonTaskVehicle.execute("http://localhost:8080/api/csa/vehicles");
     }
 
     public List<Vehicle> returnAvailableListOfVehicle() {

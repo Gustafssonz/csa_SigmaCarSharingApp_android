@@ -42,10 +42,6 @@ import sigma.scsapp.utility.AsyncResponseBooking;
 import sigma.scsapp.utility.AsyncResponseVehicle;
 import sigma.scsapp.utility.BottomNavigationViewHelper;
 
-import static sigma.scsapp.R.id.progressBar;
-import static sigma.scsapp.utility.URL.URL_TO_HIT;
-import static sigma.scsapp.utility.URL.getActiveBookings;
-import static sigma.scsapp.utility.URL.getActiveVehicles;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AsyncResponseVehicle, AsyncResponseBooking {
@@ -62,6 +58,7 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_main);
 
@@ -120,21 +117,26 @@ public class UserProfileActivity extends AppCompatActivity
 
 
         mJsonTaskVehicle.delegate = this;
-        mJsonTaskVehicle.execute(URL_TO_HIT + getActiveVehicles);
+        mJsonTaskVehicle.execute("http://localhost:8080/api/csa/vehicles");
 
         mJsonTaskBooking.delegate = this;
-        mJsonTaskBooking.execute(URL_TO_HIT + getActiveBookings);
+        mJsonTaskBooking.execute("http://localhost:8080/api/csa/bookings");
 
         // SET UP PROFILE
         String newString;
+
+        // TODO Generate content based on Database
         if (savedInstanceState == null) {
+
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
                 newString = null;
             } else {
+
                 Log.i("test", "Setting up profile");
                 TextView profile_userId = (TextView) findViewById(R.id.text_profile_name);
                 profile_userId.setText(getIntent().getStringExtra("userName"));
+
                 // TextView profile_userName = (TextView)findViewById(R.id.text_profile_name);
                 //profile_userName.setText(getIntent().getStringExtra("profileUserName"));
 
@@ -216,6 +218,8 @@ public class UserProfileActivity extends AppCompatActivity
             }
         });
     }
+
+
     private void updateListView() {
         if (this.vehicles != null && this.bookings != null) {
             // the Adapter takes the Row-Layout, inserting the result into it.
@@ -244,6 +248,7 @@ public class UserProfileActivity extends AppCompatActivity
             Toast.makeText(UserProfileActivity.this, "Not able to fetch vehicle data from server.", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void processFinishBooking(final List<Booking> output) {
         if (output != null) {
@@ -253,6 +258,7 @@ public class UserProfileActivity extends AppCompatActivity
             Toast.makeText(UserProfileActivity.this, "Not able to fetch booking data from server.", Toast.LENGTH_SHORT).show();
         }
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -260,11 +266,14 @@ public class UserProfileActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            // TODO Add camera posiblities, read: http://www.codepool.biz/take-a-photo-from-android-camera-and-upload-it-to-a-remote-php-server.html for example
 
             // Handle the camera action
         } else if (id == R.id.nav_manage) {
             // go back to profile-view
             startActivity(new Intent(UserProfileActivity.this, AdminActivity.class));
+
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.toolbar) {
