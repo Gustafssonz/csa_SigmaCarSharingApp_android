@@ -53,6 +53,12 @@ import static sigma.scsapp.utility.URL.URL_TO_HIT;
 
 public class BookingActivity extends AppCompatActivity implements AsyncResponseVehicle, AsyncResponseBooking,NavigationView.OnNavigationItemSelectedListener {
 
+    /*
+    Http Request
+     */
+    final String API_BOOKING = "http://10.0.2.2:8080/api/csa/bookings";
+    List<Booking> bookingList = new ArrayList<>();
+
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
@@ -122,7 +128,6 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
     Gson gson;
     private String currentVehicleId;
     private List<Vehicle> smallList;
-    private String wantedSite;
     private Button btn_pickTime;
 
 
@@ -137,9 +142,6 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
         expListView.setAdapter(listAdapter);
 
-        if (postString.equals("Gothenburg")) {
-                wantedSite = "Gbg";
-        }
 
         /*
         *   Booking info
@@ -184,20 +186,13 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             findAvalibleVehicles();
             findAllBookings();
-
         }
-
-
 
         /*
         *  Get Vehicle and pick
         */
-
-
-
         addDoneButton();
         addNavigationbar();
         addToolBarWithDrawerFunction();
@@ -227,13 +222,8 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
             Log.i("BookingActivity", "CHECK: Test object is now         : " + list.toString());
             Log.i("BookingActivity", "Current Site is: " + list.get(i).getSite());
             String currentSite = list.get(i).getSite();
-            Log.i("BookingActivity", "strings are: " + currentSite + " - " + wantedSite);
+            Log.i("BookingActivity", "strings are: " + currentSite + " - ");
 
-            if (currentSite.equals(wantedSite)) {
-                Log.i("BookingActivity", " Adding this Vehicles into the list since site is " + currentSite);
-                smallList.add(list.get(i));
-            }
-            Log.i("BookingActivity", "Small list is now (inside) : " + smallList);
         }
         Log.i("BookingActivity", "Small list is now: " + smallList);
         return smallList;
@@ -309,17 +299,22 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
         btn_bookingInfo_completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resultStartDate = "2017-10-22";//String.valueOf(myStartDate.getTime());
+                resultStartTime = "08:00:00";//String.valueOf(myStartTime.getTime());
+                resultEndDate = "2017-10-22";//String.valueOf(myEndDate.getTime());
+                resultEndTime = "12:00:00";//String.valueOf(myEndTime.getTime());
                 resultErrand = (String) et_errand.getText().toString();
-                resultPurpose = (String) et_purpose.getText().toString();
                 resultDestination = (String) et_destination.getText().toString();
+                resultPurpose = (String) et_purpose.getText().toString();
 
-                tv_errand.setText(resultErrand);
-                tv_purpose.setText(resultPurpose);
-                tv_destination.setText(resultDestination);
 
+                //CREATE BOOKING
+                Booking newBooking = new Booking(resultStartDate, resultStartTime, resultEndDate, resultEndTime, resultErrand, resultDestination, resultPurpose);
+                bookingList.add(newBooking);
 
                 Log.i("BookingActivity", " info" + resultErrand + " -" + resultPurpose + " - " + resultDestination + "\n"
                         + tv_resultStartDate + tv_resultEndDate);
+                Log.i("Object Booking", newBooking.toString());
             }
         });
     }
@@ -451,6 +446,7 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
         listDataChild = new HashMap<String, List<String>>();
 
         // Adding child data
+        // TO DO GET STRING SITE NO DUPLICATES STREAM
         listDataHeader.add("Site");
         List<String> locations = new ArrayList<String>();
         locations.add("Gothenburg");

@@ -2,7 +2,10 @@ package sigma.scsapp.model;
 
 import android.util.Log;
 
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import sigma.scsapp.controllers.JSONTaskBooking;
@@ -26,11 +29,12 @@ public class Booking {
     private String userId;
     private String vehicleId;
     JSONTaskBooking jtb;
-    private List<Booking> bookingList = jtb.bookingListFromJson;
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 
     public Booking() {
     }
+
 
     public Booking(String id, String timeOfBooking, String startingDate, String startingTime, String endingDate, String endingTime, String errand, String destination, String purpose, Boolean isConfirmed, String userId, String vehicleId) {
         this.id = id;
@@ -45,6 +49,19 @@ public class Booking {
         this.isConfirmed = isConfirmed;
         this.userId = userId;
         this.vehicleId = vehicleId;
+    }
+
+    public Booking(String startingDate, String startingTime, String endingDate, String endingTime, String errand, String destination, String purpose) {
+        this.timeOfBooking = String.valueOf(timestamp);
+        this.startingDate = startingDate;
+        this.startingTime = startingTime;
+        this.endingDate = endingDate;
+        this.endingTime = endingTime;
+        this.errand = errand;
+        this.destination = destination;
+        this.purpose = purpose;
+
+
     }
 
     public String getId() {
@@ -151,13 +168,6 @@ public class Booking {
         isConfirmed = confirmed;
     }
 
-    public List<Booking> getBookingList() {
-        return bookingList;
-    }
-
-    public void setBookingList(List<Booking> bookingList) {
-        this.bookingList = bookingList;
-    }
 
     @Override
     public String toString() {
@@ -174,7 +184,6 @@ public class Booking {
                 ", isConfirmed=" + isConfirmed +
                 ", userId='" + userId + '\'' +
                 ", vehicleId='" + vehicleId + '\'' +
-                ", bookingListFromJson=" + bookingList +
                 '}';
     }
 }

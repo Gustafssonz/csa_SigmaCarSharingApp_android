@@ -86,32 +86,32 @@ public class UserProfileActivity extends AppCompatActivity
         */
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbh_progress_bar);
 
-        ImageLoader.getInstance().displayImage("http://10.0.2.2:8000/IMG_2663.jpg", myPicture, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                progressBar.setVisibility(View.VISIBLE);
-                myPicture.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                progressBar.setVisibility(View.GONE);
-                myPicture.setVisibility(View.INVISIBLE);
-                Log.e("UserProfileActivity", " Failed to load profile picture");
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                progressBar.setVisibility(View.GONE);
-                myPicture.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                progressBar.setVisibility(View.GONE);
-                myPicture.setVisibility(View.INVISIBLE);
-            }
-        });
+//        ImageLoader.getInstance().displayImage("http://10.0.2.2:8000/IMG_2663.jpg", myPicture, new ImageLoadingListener() {
+//            @Override
+//            public void onLoadingStarted(String imageUri, View view) {
+//                progressBar.setVisibility(View.VISIBLE);
+//                myPicture.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                progressBar.setVisibility(View.GONE);
+//                myPicture.setVisibility(View.INVISIBLE);
+//                Log.e("UserProfileActivity", " Failed to load profile picture");
+//            }
+//
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                progressBar.setVisibility(View.GONE);
+//                myPicture.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onLoadingCancelled(String imageUri, View view) {
+//                progressBar.setVisibility(View.GONE);
+//                myPicture.setVisibility(View.INVISIBLE);
+//            }
+//        });
 
 
 
