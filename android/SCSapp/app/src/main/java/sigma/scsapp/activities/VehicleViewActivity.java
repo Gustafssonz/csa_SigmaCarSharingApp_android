@@ -12,6 +12,6 @@ public class VehicleViewActivity extends AppCompatActivity
         protected void onCreate(Bundle savedInstanceState)
             {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_vehicle_view);
+            //setContentView(R.layout.activity_vehicle_view);
             }
     }
