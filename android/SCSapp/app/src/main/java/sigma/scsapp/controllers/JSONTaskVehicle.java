@@ -32,7 +32,7 @@ import sigma.scsapp.utility.AsyncResponseVehicle;
 public class JSONTaskVehicle extends AsyncTask<String, String, List<Vehicle>> {
     public AsyncResponseVehicle delegate = null;
 
-    private final static String URL_TO_HIT = "http://10.0.2.2:8000/api/csa/vehicles";
+    private final static String URL_TO_HIT = "http://10.0.2.2:8080/api/csa/vehicles";
     private ProgressDialog dialog;
     private ListView lvBookings;
     public Activity activity;

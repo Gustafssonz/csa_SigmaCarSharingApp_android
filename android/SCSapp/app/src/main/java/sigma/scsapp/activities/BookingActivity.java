@@ -1,6 +1,5 @@
 package sigma.scsapp.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -45,8 +44,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import static sigma.scsapp.utility.URL.URL_TO_HIT;
 //import static sigma.scsapp.utility.URL.getAllBookings;
 //import static sigma.scsapp.utility.URL.getAllVehicle;
 
@@ -115,10 +112,10 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
     private Date myEndDate;
     private Date myStartTime;
     private Date myEndTime;
-    private Date dateDateStart;
-    private Date dateDateEnd;
-    private Date dateTimeStart;
-    private Date dateTimeEnd;
+    private Date serverDateStart;
+    private Date serverDateEnd;
+    private Date serverTimeStart;
+    private Date serverTimeEnd;
     private String postString = "Gothenburg";
 
 
@@ -248,18 +245,18 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
                 currentVehicleId = currentBooking.getVehicleId();
 
                 try {
-                    dateDateStart = format.parse(currentStartDate);
-                    dateDateEnd = format.parse(currentEndDate);
-                    dateTimeStart = formatTime.parse(currentStartTime);
-                    dateTimeEnd = formatTime.parse(currentEndTime);
+                    serverDateStart = format.parse(currentStartDate);
+                    serverDateEnd = format.parse(currentEndDate);
+                    serverTimeStart = formatTime.parse(currentStartTime);
+                    serverTimeEnd = formatTime.parse(currentEndTime);
                 } catch (ParseException e) {
                 }
                 String currentId = currentBooking.getVehicleId();
 
 //                for (int z = 0; currentVehicleId.equals(); z++) {
                 // TODO: 2017-10-22 Checka av ifall tiden infaller på vald tid. Tag då bort positionens vechileId och remova den från listan med avalibleVehicles.
-               if (myStartDate.before(dateDateEnd) || myEndDate.after(dateDateStart)) {
-                    // if (myStartTime.before(dateTimeEnd) || myEndTime.after(dateTimeStart)
+               if (myStartDate.before(serverDateStart) && myEndDate.before(serverDateStart) || myStartDate.after(serverDateEnd) && myEndTime.after(serverDateEnd)) {
+                    // if (myStartTime.before(serverTimeEnd) || myEndTime.after(serverTimeStart)
                     Log.i("BookingActivity", "CurrentId is now : " + currentId);
                     if (availableListOfVehicle.get(i).getVehicleId().equals(currentBooking.getVehicleId()))
                     {
@@ -272,6 +269,7 @@ public class BookingActivity extends AppCompatActivity implements AsyncResponseV
                 }
             }
             this.availableVehiclesForSite = availableListOfVehicle;
+            Log.i("Bookingactivity", "Avaliable vehicles left: " + availableListOfVehicle + "- This.list is now: " + availableVehiclesForSite);
             this.updateListView();
         } else {
             Toast.makeText(BookingActivity.this, "Not able to fetch pickedVehicle data from server.", Toast.LENGTH_SHORT).show();
