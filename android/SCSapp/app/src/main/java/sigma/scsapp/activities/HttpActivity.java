@@ -25,6 +25,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import sigma.scsapp.R;
+import sigma.scsapp.model.User;
 
 
 /**
@@ -33,8 +34,9 @@ import sigma.scsapp.R;
 
 public class HttpActivity extends AppCompatActivity{
 
-    final String API_USERS = "http://10.0.2.2:8080/api/csa/users";
+    final String API_USERS = "http://10.0.2.2:8080/api/csa/users/";
     Button btnGetApi;
+    User activeUser;
 
 
     @Override
@@ -80,7 +82,7 @@ public class HttpActivity extends AppCompatActivity{
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                URL url = new URL(API_USERS);
+                URL url = new URL(API_USERS+activeUser.getUserId());
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.connect();
